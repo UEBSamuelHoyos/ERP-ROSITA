@@ -1,15 +1,15 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.Impl;
 
-import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.ClientesDTO;
-import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.ClienteRepository;
-import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.ClienteService;
-import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Cliente;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Cliente;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.ClientesDTO;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.ClienteService;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.ClienteRepository;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
