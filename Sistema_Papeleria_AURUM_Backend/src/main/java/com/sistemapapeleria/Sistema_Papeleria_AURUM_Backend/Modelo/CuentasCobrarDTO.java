@@ -1,5 +1,4 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo;
-
 public class CuentasCobrarDTO {
     private long id;
     private long clienteId;

@@ -1,6 +1,5 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo;
 
-
 public class EmpleadosDTO {
     private long id;
     private String cedula;

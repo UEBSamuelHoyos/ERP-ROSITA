@@ -1,5 +1,4 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo;
-
 import java.util.Date;
 
 public class FacturasDTO {

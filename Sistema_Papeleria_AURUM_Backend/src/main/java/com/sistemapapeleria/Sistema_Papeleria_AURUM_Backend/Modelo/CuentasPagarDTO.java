@@ -1,5 +1,4 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo;
-
 public class CuentasPagarDTO {
     private long id;
     private long proveedorId;

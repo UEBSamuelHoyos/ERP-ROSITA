@@ -1,9 +1,9 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.Impl;
 
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.ClientesDTO;
-import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Cliente;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.ClienteRepository;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.ClienteService;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.entidades.Cliente;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
