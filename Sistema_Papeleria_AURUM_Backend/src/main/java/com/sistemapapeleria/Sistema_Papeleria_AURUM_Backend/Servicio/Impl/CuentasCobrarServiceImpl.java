@@ -15,7 +15,7 @@ import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.CuentasC
 public class CuentasCobrarServiceImpl implements CuentasCobrarService {
 
     private final CuentasCobrarRepository cuentasCobrarRepository;
-
+                    
     @Autowired
     public CuentasCobrarServiceImpl(CuentasCobrarRepository cuentasCobrarRepository) {
         this.cuentasCobrarRepository = cuentasCobrarRepository;
