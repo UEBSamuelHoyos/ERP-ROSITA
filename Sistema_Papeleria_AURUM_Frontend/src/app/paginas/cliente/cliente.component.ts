@@ -39,5 +39,12 @@ export class ClienteComponent implements OnInit {
     this.ClienteService.createCliente(cliente).subscribe(
       res => console.log(res)
     );
+    
+  }
+  deleteCliente(id : number){
+    console.log(id);
+    this.ClienteService.deleteCliente(id).subscribe(
+      ()=>this.listCliente()
+    );
   }
 }
