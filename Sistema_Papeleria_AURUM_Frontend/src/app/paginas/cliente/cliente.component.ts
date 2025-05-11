@@ -1,8 +1,6 @@
 import { Component, NgModule, OnInit } from '@angular/core';
 import { Cliente } from 'src/app/clases/cliente';
 import { ClienteService } from 'src/app/service/cliente.service';
-import { CommonModule } from '@angular/common';
-import { NgModel } from '@angular/forms';
 
 
 @Component({
@@ -10,23 +8,36 @@ import { NgModel } from '@angular/forms';
   templateUrl: './cliente.component.html',
   styleUrls: ['./cliente.component.scss']
 })
-export class ClienteComponent implements OnInit{
+export class ClienteComponent implements OnInit {
 
-cliente : Cliente [] = [];
+  id: number = 1;
+  cedula: string = '';
+  nombreCompleto: string = '';
+  direccion: string = '';
+  telefono: string = ''; 
 
-constructor(private ClienteService: ClienteService){}
+  cliente: Cliente[] = [];
+
+  constructor(private ClienteService: ClienteService) {}
 
   ngOnInit(): void {
     this.listCliente();
-   
   }
-  listCliente(){
+
+  listCliente() {
     this.ClienteService.getClienteList().subscribe(
       data => {
-
-          this.cliente = data;
-          console.log(this.cliente);
+        this.cliente = data;
+        console.log(this.cliente);
       }
+    );
+  }
+
+  addCliente() {
+    let cliente = new Cliente(this.id , this.nombreCompleto, this.cedula, this.direccion, this.telefono);
+    console.log(cliente);
+    this.ClienteService.createCliente(cliente).subscribe(
+      res => console.log(res)
     );
   }
 }

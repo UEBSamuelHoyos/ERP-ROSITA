@@ -1,7 +1,53 @@
-<h2>CLIENTE</h2>
-<ul> 
-  <li *ngFor = "let c of cliente">
-   {{c.id }} - {{c.nombreCompleto}} - {{c.direccion}} - {{c.telefono}}
+<h1>Cliente</h1>
 
-  </li>
-</ul>
+<h2>Registrar un cliente</h2>
+<form>
+  <div class="container">
+    <label for="cedula" class="form-label">Cédula</label>
+    <input [(ngModel)]="cedula" type="text" class="form-control" id="cedula" name="cedula">
+  </div>
+
+  <div class="container">
+    <label for="nombreCompleto" class="form-label">Nombre completo</label>
+    <input [(ngModel)]="nombreCompleto" type="text" class="form-control" id="nombreCompleto" name="nombreCompleto">
+  </div>
+
+  <div class="container">
+    <label for="direccion" class="form-label">Dirección</label>
+    <input [(ngModel)]="direccion" type="text" class="form-control" id="direccion" name="direccion">
+  </div>
+
+  <div class="container">
+    <label for="telefono" class="form-label">Teléfono</label>
+    <input [(ngModel)]="telefono" type="text" class="form-control" id="telefono" name="telefono">
+  </div>
+
+  <br>
+  <div style="text-align: center;">
+    <button type="button" class="btn btn-primary" (click)="addCliente()">Crear</button>
+  </div>
+</form>
+
+<br><br>
+
+<h2>Lista de clientes</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Cédula</th>
+      <th scope="col">Nombre completo</th>
+      <th scope="col">Dirección</th>
+      <th scope="col">Teléfono</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let c of cliente">
+      <th scope="row">{{ c.id }}</th>
+      <td>{{ c.cedula }}</td>
+      <td>{{ c.nombreCompleto }}</td>
+      <td>{{ c.direccion }}</td>
+      <td>{{ c.telefono }}</td>
+    </tr>
+  </tbody>
+</table>
