@@ -12,4 +12,7 @@ export class ClienteService {
   getClienteList():Observable<Cliente []>{
     return this.http.get<Cliente[]>(this.api);
   }
+  createCliente(Cliente : Cliente):Observable<Cliente>{
+    return this.http.post<Cliente>(this.api,Cliente);
+  }
 }
