@@ -7,17 +7,26 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "clientes")
+@Table(name = "cliente")
 public class Cliente {
-    
-    @Id
-    
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   
     private Long id;
     private String cedula;
     private String nombreCompleto;
     private String direccion;
     private String telefono;
+    
+    public Cliente(){
+
+    }
+    public Cliente(Long id, String nombreCompleto, String direccion, String telefono){
+        this.id = id;
+        this.nombreCompleto = nombreCompleto;
+        this.direccion = direccion;
+        this.telefono = telefono;
+    }
     public Long getId() {
         return id;
     }
@@ -49,5 +58,6 @@ public class Cliente {
         this.telefono = telefono;
     }
     
-  
 }
+
+  

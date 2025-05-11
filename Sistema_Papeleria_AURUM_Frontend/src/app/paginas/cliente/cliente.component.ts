@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { Cliente } from 'src/app/clases/cliente';
 import { ClienteService } from 'src/app/service/cliente.service';
+import { CommonModule } from '@angular/common';
+import { NgModel } from '@angular/forms';
+
 
 @Component({
   selector: 'app-cliente',
@@ -9,12 +12,6 @@ import { ClienteService } from 'src/app/service/cliente.service';
 })
 export class ClienteComponent implements OnInit{
 
-id : string = '';
-cedula : string = '';
-nombreCompleto : string = '';
-direccion : string = '';
-telefono : string = '';
-  
 cliente : Cliente [] = [];
 
 constructor(private ClienteService: ClienteService){}

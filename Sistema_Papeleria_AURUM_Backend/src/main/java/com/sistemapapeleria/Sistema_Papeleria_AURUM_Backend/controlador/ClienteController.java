@@ -17,14 +17,14 @@ import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.ClientesDTO;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.ClienteService;
 
 @RestController
-@RequestMapping("/api/clientes")
-@CrossOrigin(origins = "*")  // Permite peticiones desde cualquier origen (útil para conectar con Angular)
+@RequestMapping("/api/Cliente")
+@CrossOrigin(origins = "http://localhost:4200") 
 public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<ClientesDTO> guardarCliente(@RequestBody ClientesDTO clienteDTO) {
         ClientesDTO guardado = clienteService.saveCliente(clienteDTO);
         return ResponseEntity.ok(guardado);

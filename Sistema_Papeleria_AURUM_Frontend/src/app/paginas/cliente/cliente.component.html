@@ -1,47 +1,7 @@
 <h2>CLIENTE</h2>
+<ul> 
+  <li *ngFor = "let c of cliente">
+   {{c.id }} - {{c.nombreCompleto}} - {{c.direccion}} - {{c.telefono}}
 
-<form>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Nombre completo</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-    <div id="emailHelp" class="form-text"></div>
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Cedula</label>
-    <input type="password" class="form-control" id="exampleInputPassword1">
-  </div>
-   <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Direccion</label>
-    <input type="password" class="form-control" id="exampleInputPassword1">
-  </div>
-   <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">telefono</label>
-    <input type="password" class="form-control" id="exampleInputPassword1">
-  </div>
-  <div class="mb-3 form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-
-<table class="table">
-  <thead>
-    <tr >
-      <th class="table-dark" scope="col">ID</th>
-      <th class="table-dark" scope="col">Nombres - Apellidos</th>
-        <th class="table-dark" scope="col">Cedula</th>
-      <th class="table-dark" scope="col">Direccion</th>
-      <th class="table-dark"scope="col">telefono</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor= "let c of cliente">
-      <th  class="table-light">{{c.id}}</th>
-      <td class="table-light"> {{c.cedula}} </td>
-      <td class="table-light">{{c.nombreCompleto}}</td>
-       <td class="table-light">{{c.direccion}}</td>
-          <td class="table-light">{{c.telefono}}</td>
-    </tr>
-  </tbody>
-</table>
+  </li>
+</ul>
