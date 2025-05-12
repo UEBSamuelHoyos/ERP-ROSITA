@@ -4,14 +4,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { ClienteComponent } from './paginas/cliente/cliente.component'; 
+import { ClienteComponent } from './paginas/cliente/cliente.component';
+import { TabsComponent } from './core/components/tabs/tabs.component'; 
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ClienteComponent
+    ClienteComponent,
+    TabsComponent
 
   ],
   imports: [
