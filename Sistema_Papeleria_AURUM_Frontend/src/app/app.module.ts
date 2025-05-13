@@ -5,7 +5,9 @@ import { AppComponent } from './app.component';
 import { HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ClienteComponent } from './paginas/cliente/cliente.component';
-import { TabsComponent } from './core/components/tabs/tabs.component'; 
+import { TabsComponent } from './core/components/tabs/tabs.component';
+import { InventarioComponent } from './paginas/inventario/inventario.component';
+import { ImpuestosComponent } from './paginas/impuestos/impuestos.component'; 
 
 
 
@@ -13,7 +15,9 @@ import { TabsComponent } from './core/components/tabs/tabs.component';
   declarations: [
     AppComponent,
     ClienteComponent,
-    TabsComponent
+    TabsComponent,
+    InventarioComponent,
+    ImpuestosComponent
 
   ],
   imports: [
