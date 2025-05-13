@@ -10,6 +10,8 @@ import { FacturaComponent } from './paginas/factura/factura.component';
 import { DevolucionesComponent } from './paginas/devoluciones/devoluciones.component';
 import { VentaComponent } from './paginas/venta/venta.component';
 import { EmpleadosComponent } from './paginas/empleados/empleados.component';
+import { ImpuestosComponent } from './paginas/impuestos/impuestos.component';
+import { InventarioComponent } from './paginas/inventario/inventario.component';
 
 const routes: Routes = [
   {
@@ -53,6 +55,14 @@ const routes: Routes = [
   {
     path: "Empleados",
     component: EmpleadosComponent
+  },
+   {
+    path: "Impuestos",
+    component: ImpuestosComponent
+  },
+   {
+    path: "inventario",
+    component: InventarioComponent
   },
   
 ];
