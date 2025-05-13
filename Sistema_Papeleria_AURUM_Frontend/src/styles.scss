@@ -1,0 +1,108 @@
+/* Fondo general */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+    background: linear-gradient(135deg, #ffffff, #e0f7fa, #80deea, #4dd0e1);
+}
+
+/* Contenido principal */
+.content {
+    position: relative;
+    z-index: 10;
+    color: #006064;
+    text-align: center;
+    padding-top: 20vh;
+}
+
+/* Título y texto */
+h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.5);
+}
+
+p {
+    font-size: 1.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+    text-shadow: 0 1px 5px rgba(255, 255, 255, 0.5);
+}
+
+/* Contenedor de olas: fondo fijo y detrás de todo */
+.waves-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40vh;
+    overflow: hidden;
+    z-index: -1;
+    pointer-events: none;
+    transform: rotate(180deg);
+
+}
+
+/* Capas de olas */
+.wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background-repeat: repeat-x;
+    background-position: 0 bottom;
+    transform-origin: center bottom;
+    transform: rotate(180deg);
+
+}
+
+/* Cada ola con distinta velocidad y opacidad */
+.wave-1 {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' fill='%2326c6da'/%3E%3C/svg%3E");
+    animation: wave-animation 25s linear infinite;
+    z-index: 3;
+}
+
+.wave-2 {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.5' fill='%2300acc1'/%3E%3C/svg%3E");
+    animation: wave-animation 20s linear infinite;
+    z-index: 2;
+}
+
+.wave-3 {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.75' fill='%230097a7'/%3E%3C/svg%3E");
+    animation: wave-animation 15s linear infinite;
+    z-index: 1;
+}
+
+/* Animación de las olas */
+@keyframes wave-animation {
+    0% {
+        transform: translateX(0) translateZ(0);
+    }
+    50% {
+        transform: translateX(-25%) translateZ(0);
+    }
+    100% {
+        transform: translateX(-50%) translateZ(0);
+    }
+}
+
+/* Responsive para dispositivos pequeños */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    p {
+        font-size: 1.2rem;
+        padding: 0 20px;
+    }
+
+    .waves-container {
+        height: 30vh;
+    }
+}

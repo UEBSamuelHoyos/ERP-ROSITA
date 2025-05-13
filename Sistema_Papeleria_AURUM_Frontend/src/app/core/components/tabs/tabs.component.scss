@@ -9,6 +9,11 @@
   position: fixed; /* Fija la barra al lado izquierdo */
   top: 0;
   left: 0;
+  #container {
+    z-index: 10;
+    position: relative;
+}
+
 }
 
 .tab {
