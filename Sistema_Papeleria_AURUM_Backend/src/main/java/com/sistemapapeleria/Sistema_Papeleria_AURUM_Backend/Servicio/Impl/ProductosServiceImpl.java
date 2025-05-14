@@ -41,6 +41,37 @@ public class ProductosServiceImpl implements ProductosService {
                 .collect(Collectors.toList());
     }
 
+    // Buscar productos por nombre (contiene)
+public List<ProductosDTO> buscarPorNombre(String nombre) {
+    return productosRepository.findByNombreContainingIgnoreCase(nombre)
+            .stream().map(this::mapToDTO).collect(Collectors.toList());
+}
+
+// Buscar productos por categoría exacta (sin importar mayúsculas)
+public List<ProductosDTO> buscarPorCategoria(String categoria) {
+    return productosRepository.findByCategoriaIgnoreCase(categoria)
+            .stream().map(this::mapToDTO).collect(Collectors.toList());
+}
+
+// Buscar productos con stock menor a cierto límite
+public List<ProductosDTO> buscarStockBajo(int limite) {
+    return productosRepository.findByStockLessThan(limite)
+            .stream().map(this::mapToDTO).collect(Collectors.toList());
+}
+
+// Buscar productos por rango de precio
+public List<ProductosDTO> buscarPorRangoPrecio(double min, double max) {
+    return productosRepository.findByPrecioVentaBetween(min, max)
+            .stream().map(this::mapToDTO).collect(Collectors.toList());
+}
+
+// Buscar productos con al menos X unidades en stock
+public List<ProductosDTO> buscarDisponibles(int minStock) {
+    return productosRepository.findByStockGreaterThanEqual(minStock)
+            .stream().map(this::mapToDTO).collect(Collectors.toList());
+}
+
+
     @Override
     public ProductosDTO getProductoById(Long id) {
         return productosRepository.findById(id)
@@ -51,6 +82,19 @@ public class ProductosServiceImpl implements ProductosService {
     @Override
     public void deleteProducto(Long id) {
         productosRepository.deleteById(id);
+    }
+
+    public ProductosDTO updateProducto(Long id, ProductosDTO dto) {
+        return productosRepository.findById(id).map(producto -> {
+            producto.setCategoria(dto.getCategoria());
+            producto.setNombre(dto.getNombre());
+            producto.setPrecioCompra(dto.getPrecioCompra());
+            producto.setPrecioVenta(dto.getPrecioVenta());
+            producto.setStock(dto.getStock());
+
+            Productos actualizado = productosRepository.save(producto);
+            return mapToDTO(actualizado);
+        }).orElse(null);
     }
 
     private ProductosDTO mapToDTO(Productos entity) {
