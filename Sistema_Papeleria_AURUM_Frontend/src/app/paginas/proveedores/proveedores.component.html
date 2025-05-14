@@ -1,1 +1,71 @@
-<p>proveedores works!</p>
+<div class="container mt-4">
+  <h1 class="mb-4">Gestión de Proveedores</h1>
+  <!-- Formulario de registro --> 
+  <div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+      <h2 class="h5 mb-0">Registrar Proveedor</h2>
+    </div>
+    <div class="card-body">
+      <form>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="id" class="form-label">ID</label>
+            <input [(ngModel)]="id" type="number" class="form-control" id="id" name="id">
+          </div>
+          <div class="col-md-6">
+            <label for="cedula" class="form-label">Cédula</label>
+            <input [(ngModel)]="cedula" type="text" class="form-control" id="cedula" name="cedula">
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="nombreCompleto" class="form-label">Nombre completo</label>
+            <input [(ngModel)]="nombreCompleto" type="text" class="form-control" id="nombreCompleto" name="nombreCompleto">
+          </div>
+          <div class="col-md-6">
+            <label for="direccion" class="form-label">Dirección</label>
+            <input [(ngModel)]="direccion" type="text" class="form-control" id="direccion" name="direccion">
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input [(ngModel)]="telefono" type="text" class="form-control" id="telefono" name="telefono">
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" (click)="addProveedor()">Crear</button>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Tabla de proveedores -->
+  <div class="card">
+    <div class="card-header bg-light">
+      <h2 class="h5 mb-0">Lista de Proveedores</h2>
+    </div>
+    <div class="card-body p-0">
+      <table class="table table-striped table-hover mb-0">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Cédula</th>
+            <th>Nombre</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of proveedores">
+            <td>{{ p.id }}</td>
+            <td>{{ p.cedula }}</td>
+            <td>{{ p.nombreCompleto }}</td>
+            <td>{{ p.direccion }}</td>
+            <td>{{ p.telefono }}</td>
+            <td><button class="btn btn-sm btn-danger" (click)="deleteProveedor(p.id)">Eliminar</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

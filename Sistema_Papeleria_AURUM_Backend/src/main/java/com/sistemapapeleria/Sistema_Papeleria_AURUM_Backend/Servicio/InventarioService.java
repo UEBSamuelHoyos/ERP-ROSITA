@@ -1,7 +1,8 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio;
 
-import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.InventarioDTO;
 import java.util.List;
+
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.InventarioDTO;
 
 public interface InventarioService {
     InventarioDTO saveInventario(InventarioDTO inventarioDTO);

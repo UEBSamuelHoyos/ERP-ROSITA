@@ -1,14 +1,15 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.Impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Impuestos;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.ImpuestosDTO;
-import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.ImpuestosRepository;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.ImpuestosService;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.ImpuestosRepository;
 
 @Service
 public class ImpuestosServiceImpl implements ImpuestosService {

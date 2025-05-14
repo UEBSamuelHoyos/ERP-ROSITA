@@ -1,9 +1,10 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.Impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Inventario;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.InventarioDTO;

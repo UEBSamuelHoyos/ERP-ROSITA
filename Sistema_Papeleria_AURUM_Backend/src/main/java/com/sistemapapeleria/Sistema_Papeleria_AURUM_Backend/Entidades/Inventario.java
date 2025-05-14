@@ -1,5 +1,7 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades;
 
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,7 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import java.util.Date;
 
 @Entity
 @Table(name = "inventario")

@@ -8,7 +8,9 @@ import { ClienteComponent } from './paginas/cliente/cliente.component';
 import { TabsComponent } from './core/components/tabs/tabs.component';
 import { InventarioComponent } from './paginas/inventario/inventario.component';
 import { ImpuestosComponent } from './paginas/impuestos/impuestos.component'; 
-import { ProductoComponent } from './paginas/producto/producto.component';
+import { ProveedoresComponent } from './paginas/proveedores/proveedores.component';
+import { EmpleadosComponent } from './paginas/empleados/empleados.component';
+import { ProductosComponent } from './paginas/productos/productos.component';
 
 
 
@@ -18,7 +20,11 @@ import { ProductoComponent } from './paginas/producto/producto.component';
     ClienteComponent,
     TabsComponent,
     InventarioComponent,
-    ImpuestosComponent
+    ImpuestosComponent,
+    ProveedoresComponent,
+    EmpleadosComponent,
+    ProductosComponent
+  
 
   ],
   imports: [

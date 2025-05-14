@@ -13,7 +13,7 @@ export class TabsComponent {
 
   rutas = [
     "/Login",        // 0
-    "/Producto",     // 1
+    "/Productos",     // 1
     "/Venta",        // 2
     "/Cliente",      // 3
     "/inventario",   // 4

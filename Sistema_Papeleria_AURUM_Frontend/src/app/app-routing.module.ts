@@ -4,7 +4,7 @@ import { ClienteComponent } from './paginas/cliente/cliente.component';
 import { HomeComponent } from './paginas/home/home.component';
 import { CuentasComponent } from './paginas/cuentas/cuentas.component';
 import { LoginComponent } from './paginas/login/login.component';
-import { ProductoComponent } from './paginas/producto/producto.component';
+import { ProductosComponent } from './paginas/productos/productos.component';
 import { ProveedoresComponent } from './paginas/proveedores/proveedores.component';
 import { FacturaComponent } from './paginas/factura/factura.component';
 import { DevolucionesComponent } from './paginas/devoluciones/devoluciones.component';
@@ -36,8 +36,8 @@ const routes: Routes = [
     component: HomeComponent
   },
     {
-    path: "Producto",
-    component: ProductoComponent
+    path: "Productos",
+    component: ProductosComponent
   },
     {
     path: "Factura",

@@ -17,8 +17,8 @@ import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.ProductosDTO;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.ProductosService;
 
 @RestController
-@RequestMapping("/api/productos")
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/Productos")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ProductosController {
 
     private final ProductosService productosService;

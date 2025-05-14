@@ -17,8 +17,8 @@ import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.ProveedoresDT
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.ProveedoresService;
 
 @RestController
-@RequestMapping("/api/proveedores")
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/Proveedores")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ProveedoresController {
 
     private final ProveedoresService proveedoresService;

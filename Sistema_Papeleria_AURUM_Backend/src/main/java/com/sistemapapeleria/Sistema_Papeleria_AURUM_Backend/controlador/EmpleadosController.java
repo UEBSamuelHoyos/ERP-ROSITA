@@ -17,8 +17,8 @@ import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.EmpleadosDTO;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.EmpleadosService;
 
 @RestController
-@RequestMapping("/api/empleados")
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/Empleados")
+@CrossOrigin(origins = "http://localhost:4200")
 public class EmpleadosController {
 
     private final EmpleadosService empleadosService;

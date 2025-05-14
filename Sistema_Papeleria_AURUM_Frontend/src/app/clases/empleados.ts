@@ -1,10 +1,9 @@
-export class Proveedores {
+export class Empleados {
     constructor(
         public id: number,
         public cedula: String,
         public nombreCompleto: String,
-        public direccion: String,
+        public cargo: String,
         public telefono: String
     ) {}
 }
-

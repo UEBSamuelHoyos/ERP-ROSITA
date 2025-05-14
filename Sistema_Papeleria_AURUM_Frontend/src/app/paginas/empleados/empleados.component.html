@@ -1,0 +1,66 @@
+<div class="container mt-4">
+  <h1 class="mb-4">Gestión de Empleados</h1>
+  
+  <!-- Formulario de registro -->
+  <div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+      <h2 class="h5 mb-0">Registrar Empleado</h2>
+    </div>
+    <div class="card-body">
+      <form>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="cedula" class="form-label">Cédula</label>
+            <input [(ngModel)]="cedula" type="text" class="form-control" id="cedula" name="cedula">
+          </div>
+          <div class="col-md-6">
+            <label for="nombreCompleto" class="form-label">Nombre completo</label>
+            <input [(ngModel)]="nombreCompleto" type="text" class="form-control" id="nombreCompleto" name="nombreCompleto">
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="cargo" class="form-label">Cargo</label>
+            <input [(ngModel)]="cargo" type="text" class="form-control" id="cargo" name="cargo">
+          </div>
+          <div class="col-md-6">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input [(ngModel)]="telefono" type="text" class="form-control" id="telefono" name="telefono">
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" (click)="addEmpleado()">Crear</button>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Tabla de empleados -->
+  <div class="card">
+    <div class="card-header bg-light">
+      <h2 class="h5 mb-0">Lista de Empleados</h2>
+    </div>
+    <div class="card-body p-0">
+      <table class="table table-striped table-hover mb-0">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Cédula</th>
+            <th>Nombre</th>
+            <th>Cargo</th>
+            <th>Teléfono</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let e of empleados">
+            <td>{{ e.id }}</td>
+            <td>{{ e.cedula }}</td>
+            <td>{{ e.nombreCompleto }}</td>
+            <td>{{ e.cargo }}</td>
+            <td>{{ e.telefono }}</td>
+            <td><button class="btn btn-sm btn-danger" (click)="deleteEmpleado(e.id)">Eliminar</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
