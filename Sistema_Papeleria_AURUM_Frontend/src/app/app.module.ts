@@ -6,12 +6,12 @@ import { HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ClienteComponent } from './paginas/cliente/cliente.component';
 import { TabsComponent } from './core/components/tabs/tabs.component';
-import { InventarioComponent } from './paginas/inventario/inventario.component';
 import { ImpuestosComponent } from './paginas/impuestos/impuestos.component'; 
 import { ProveedoresComponent } from './paginas/proveedores/proveedores.component';
 import { EmpleadosComponent } from './paginas/empleados/empleados.component';
 import { ProductosComponent } from './paginas/productos/productos.component';
-
+import { DevolucionesComponent } from './paginas/devoluciones/devoluciones.component';
+import { InventarioComponent } from './paginas/inventario/inventario.component';
 
 
 @NgModule({
@@ -23,9 +23,9 @@ import { ProductosComponent } from './paginas/productos/productos.component';
     ImpuestosComponent,
     ProveedoresComponent,
     EmpleadosComponent,
-    ProductosComponent
+    ProductosComponent,
+    DevolucionesComponent,
   
-
   ],
   imports: [
     BrowserModule,

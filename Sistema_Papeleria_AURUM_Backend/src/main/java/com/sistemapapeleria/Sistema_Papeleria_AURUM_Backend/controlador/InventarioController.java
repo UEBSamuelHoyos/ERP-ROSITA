@@ -17,8 +17,8 @@ import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.InventarioDTO
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.InventarioService;
 
 @RestController
-@RequestMapping("/api/inventario")
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/Inventario")
+@CrossOrigin(origins = "http://localhost:4200")
 public class InventarioController {
 
     private final InventarioService inventarioService;

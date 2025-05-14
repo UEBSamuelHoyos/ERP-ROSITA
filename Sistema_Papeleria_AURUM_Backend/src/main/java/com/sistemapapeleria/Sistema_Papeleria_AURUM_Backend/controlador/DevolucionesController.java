@@ -17,8 +17,8 @@ import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.DevolucionesD
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.DevolucionesService;
 
 @RestController
-@RequestMapping("/api/devoluciones")
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/Devoluciones")
+@CrossOrigin(origins = "http://localhost:4200")
 public class DevolucionesController {
 
     private final DevolucionesService devolucionesService;
