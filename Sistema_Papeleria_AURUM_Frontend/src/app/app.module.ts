@@ -12,6 +12,7 @@ import { EmpleadosComponent } from './paginas/empleados/empleados.component';
 import { ProductosComponent } from './paginas/productos/productos.component';
 import { DevolucionesComponent } from './paginas/devoluciones/devoluciones.component';
 import { InventarioComponent } from './paginas/inventario/inventario.component';
+import { HomeComponent } from './paginas/home/home.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { InventarioComponent } from './paginas/inventario/inventario.component';
     EmpleadosComponent,
     ProductosComponent,
     DevolucionesComponent,
+    HomeComponent
   
   ],
   imports: [

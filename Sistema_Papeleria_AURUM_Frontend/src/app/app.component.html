@@ -1,2 +1,6 @@
-<app-tabs> </app-tabs>
+<!-- Mostrar tabs globales solo si NO estamos en login ni en home -->
+<div *ngIf="!isLoginPage() && !isHomePage()">
+  <app-tabs></app-tabs>
+</div>
+
 <router-outlet></router-outlet>

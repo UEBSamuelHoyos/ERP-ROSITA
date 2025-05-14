@@ -7,12 +7,13 @@ import { NavigationEnd, Router } from '@angular/router';
   styleUrls: ['./tabs.component.scss']
 })
 export class TabsComponent {
-  seleccionado = Array(11).fill(false);
+  seleccionado = Array(12).fill(false);
   colorDesactivado = "#555555";
   colorActivado = "#000000";
 
   rutas = [
-    "/Login",        // 0
+    "/Login",
+    "/home",        // 0
     "/Productos",     // 1
     "/Venta",        // 2
     "/Cliente",      // 3
@@ -31,7 +32,7 @@ export class TabsComponent {
         console.log("Evento", event);
 
         const index = this.rutas.indexOf(event.urlAfterRedirects);
-        this.seleccionado = Array(11).fill(false);
+        this.seleccionado = Array(12).fill(false);
         if (index !== -1) {
           this.seleccionado[index] = true;
         }

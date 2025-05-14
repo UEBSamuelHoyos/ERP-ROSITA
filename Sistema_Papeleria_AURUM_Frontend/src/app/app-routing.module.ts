@@ -32,7 +32,7 @@ const routes: Routes = [
     component: CuentasComponent
   },
     {
-    path: "Home",
+    path: "home",
     component: HomeComponent
   },
     {

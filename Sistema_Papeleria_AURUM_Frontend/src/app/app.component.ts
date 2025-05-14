@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Sistema_Papeleria_AURUM_Frontend';
+  constructor(private router: Router) {}
+
+  isLoginPage(): boolean {
+    return this.router.url === '/' || this.router.url === '/login';
+  }
+
+  isHomePage(): boolean {
+    return this.router.url === '/home';
+  }
 }

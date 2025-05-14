@@ -4,8 +4,9 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
     overflow-y: auto;
-    position: relative;
+    position: relative; /* Ensure the body acts as a reference for positioning */
     background: linear-gradient(135deg, #ffffff, #e0f7fa, #80deea, #4dd0e1);
+    z-index: 0; /* Set the body background behind everything */
 }
 
 /* Contenido principal */
@@ -39,10 +40,9 @@ p {
     width: 100%;
     height: 40vh;
     overflow: hidden;
-    z-index: -1;
+    z-index: -10; /* Ensure waves are behind all other elements */
     pointer-events: none;
     transform: rotate(180deg);
-
 }
 
 /* Capas de olas */
@@ -55,8 +55,7 @@ p {
     background-repeat: repeat-x;
     background-position: 0 bottom;
     transform-origin: center bottom;
-    transform: rotate(180deg);
-
+    transform: rotate(deg);
 }
 
 /* Cada ola con distinta velocidad y opacidad */

@@ -1,37 +1,41 @@
+body, html {
+  height: 100%;
+  margin: 0;
+}
 #container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 250px; /* Ancho de la barra */
-  background-color: rgb(0, 0, 0, 0.1);
-  overflow-y: auto; /* Permite el desplazamiento vertical */
-  height: 100vh; /* Extiende la barra desde la parte superior hasta la parte inferior de la pantalla */
-  position: fixed; /* Fija la barra al lado izquierdo */
+  justify-content: center; /* Centra verticalmente */
+  width: 250px;
+  background-color: rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  height: 100vh;
+  position: fixed;
   top: 0;
   left: 0;
-  #container {
-    z-index: 10;
-    position: relative;
-}
-
+  z-index: 10;
 }
 
 .tab {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 8px;
+  padding: 8px 16px;
+  margin: 5px 0; /* espacio entre pestañas */
   cursor: pointer;
   transition: background-color 0.3s ease;
-  width: 100%; /* Asegura que las pestañas ocupen todo el ancho disponible */
+  background-color: rgba(0, 0, 0, 0.05);
+  width: 200px;
+  justify-content: center;
+  border-radius: 6px;
 }
-
 .tab-label {
   font-size: 16px;
   font-weight: 500;
 }
 
 .seleccionado {
-  background-color: rgba(63, 206, 170, 1.0); /* Color de la selección */
+  background-color: rgba(63, 206, 170, 1.0);
   color: white;
 }
