@@ -1,46 +1,71 @@
-<div class="container">
-  <h2>Gestión de Ventas</h2>
-  
-  <form (ngSubmit)="agregarVenta()">
-    <div class="form-group">
-      <label for="clienteId">ID Cliente:</label>
-      <input type="number" id="clienteId" [(ngModel)]="nuevaVenta.cliente.id" name="clienteId" class="form-control" required min="1">
+<div class="container mt-4">
+  <h1>Registrar Venta</h1>
+  <div class="card mb-4">
+    <div class="card-body">
+      <form>
+        <div class="mb-3">
+          <label for="clienteId" class="form-label">ID Cliente</label>
+          <input [(ngModel)]="clienteId" name="clienteId" id="clienteId" type="number" class="form-control" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Seleccionar productos para la venta:</label>
+          <div class="table-responsive">
+            <table class="table table-bordered align-middle">
+              <thead>
+                <tr>
+                  <th>Seleccionar</th>
+                  <th>ID Producto</th>
+                  <th>Nombre</th>
+                  <th>Cantidad</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let prod of listaProductos; let i = index">
+                  <td>
+                    <input type="checkbox" [(ngModel)]="prod.seleccionado" name="seleccionado{{i}}" />
+                  </td>
+                  <td>{{ prod.id }}</td>
+                  <td>{{ prod.nombre }}</td>
+                  <td>
+                    <input type="number" [(ngModel)]="prod.cantidadSeleccionada" name="cantidadSeleccionada{{i}}" min="1" [disabled]="!prod.seleccionado" class="form-control" style="width: 100px;" />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" (click)="agregarVenta()">Registrar Venta</button>
+      </form>
     </div>
-    <div class="form-group">
-      <label for="productoId">ID Producto:</label>
-      <input type="number" id="productoId" [(ngModel)]="nuevaVenta.producto.id" name="productoId" class="form-control" required min="1">
-    </div>
-    <div class="form-group">
-      <label for="cantidad">Cantidad:</label>
-      <input type="number" id="cantidad" [(ngModel)]="nuevaVenta.cantidad" name="cantidad" class="form-control" required min="1">
-    </div>
-    <button type="submit" class="btn btn-primary">Agregar Venta</button>
-  </form>
+  </div>
 
-  <h3>Lista de Ventas</h3>
+  <h2>Lista de Ventas</h2>
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>ID</th>
+        <th>ID Venta</th>
         <th>Cliente</th>
-        <th>Producto</th>
-        <th>Cantidad</th>
-        <th>Precio Unitario</th>
-        <th>Descuento</th>
         <th>Total</th>
         <th>Fecha</th>
+        <th>Productos</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let venta of ventas">
         <td>{{ venta.id }}</td>
         <td>{{ venta.clienteNombre }}</td>
-        <td>{{ venta.productoNombre }}</td>
-        <td>{{ venta.cantidad }}</td>
-        <td>{{ venta.precioUnitario }}</td>
-        <td>{{ venta.descuento }}</td>
         <td>{{ venta.total }}</td>
-        <td>{{ venta.fecha | date }}</td>
+        <td>{{ venta.fecha | date:'short' }}</td>
+        <td>
+          <ul>
+            <li *ngFor="let prod of venta.productos">
+              Producto ID: {{ prod.idProducto }}, Cantidad: {{ prod.cantidad }}
+              <ng-container *ngIf="'precioUnitario' in prod && prod.precioUnitario !== undefined">
+                , Precio: {{ prod.precioUnitario }}
+              </ng-container>
+            </li>
+          </ul>
+        </td>
       </tr>
     </tbody>
   </table>

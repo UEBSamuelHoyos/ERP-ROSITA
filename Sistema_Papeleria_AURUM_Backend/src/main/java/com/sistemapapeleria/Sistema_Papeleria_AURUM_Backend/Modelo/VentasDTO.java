@@ -1,18 +1,16 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo;
 
 import java.util.Date;
+import java.util.List;
 
 public class VentasDTO {
     private Long id;
     private Long clienteId;
-    private String clienteNombre; // Nueva propiedad
-    private Long productoId;
-    private String productoNombre; // Nueva propiedad
-    private int cantidad;
-    private double precioUnitario;
+    private String clienteNombre;
     private double descuento;
     private double total;
-    private Date fecha; // Nueva propiedad
+    private Date fecha;
+    private List<VentaProductoDTO> productos;
 
     // Getters y setters
     public Long getId() {
@@ -39,38 +37,6 @@ public class VentasDTO {
         this.clienteNombre = clienteNombre;
     }
 
-    public Long getProductoId() {
-        return productoId;
-    }
-
-    public void setProductoId(Long productoId) {
-        this.productoId = productoId;
-    }
-
-    public String getProductoNombre() {
-        return productoNombre;
-    }
-
-    public void setProductoNombre(String productoNombre) {
-        this.productoNombre = productoNombre;
-    }
-
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public double getPrecioUnitario() {
-        return precioUnitario;
-    }
-
-    public void setPrecioUnitario(double precioUnitario) {
-        this.precioUnitario = precioUnitario;
-    }
-
     public double getDescuento() {
         return descuento;
     }
@@ -93,5 +59,13 @@ public class VentasDTO {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    public List<VentaProductoDTO> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<VentaProductoDTO> productos) {
+        this.productos = productos;
     }
 }

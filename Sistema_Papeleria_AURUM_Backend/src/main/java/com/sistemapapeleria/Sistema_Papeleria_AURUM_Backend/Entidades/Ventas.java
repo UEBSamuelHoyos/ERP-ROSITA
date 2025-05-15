@@ -2,6 +2,7 @@ package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades;
 
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "ventas")
@@ -15,12 +16,9 @@ public class Ventas {
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
-    @ManyToOne
-    @JoinColumn(name = "producto_id", nullable = false)
-    private Productos producto;
+    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<VentaProducto> productos;
 
-    private Integer cantidad;
-    private Double precioUnitario;
     private Double descuento;
     private Double total;
 
@@ -43,28 +41,12 @@ public class Ventas {
         this.cliente = cliente;
     }
 
-    public Productos getProducto() {
-        return producto;
+    public List<VentaProducto> getProductos() {
+        return productos;
     }
 
-    public void setProducto(Productos producto) {
-        this.producto = producto;
-    }
-
-    public Integer getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public Double getPrecioUnitario() {
-        return precioUnitario;
-    }
-
-    public void setPrecioUnitario(Double precioUnitario) {
-        this.precioUnitario = precioUnitario;
+    public void setProductos(List<VentaProducto> productos) {
+        this.productos = productos;
     }
 
     public Double getDescuento() {
