@@ -4,15 +4,15 @@
   <form (ngSubmit)="agregarVenta()">
     <div class="form-group">
       <label for="clienteId">ID Cliente:</label>
-      <input type="number" id="clienteId" [(ngModel)]="nuevaVenta.cliente.id" name="clienteId" class="form-control" required>
+      <input type="number" id="clienteId" [(ngModel)]="nuevaVenta.cliente.id" name="clienteId" class="form-control" required min="1">
     </div>
     <div class="form-group">
       <label for="productoId">ID Producto:</label>
-      <input type="number" id="productoId" [(ngModel)]="nuevaVenta.producto.id" name="productoId" class="form-control" required>
+      <input type="number" id="productoId" [(ngModel)]="nuevaVenta.producto.id" name="productoId" class="form-control" required min="1">
     </div>
     <div class="form-group">
       <label for="cantidad">Cantidad:</label>
-      <input type="number" id="cantidad" [(ngModel)]="nuevaVenta.cantidad" name="cantidad" class="form-control" required>
+      <input type="number" id="cantidad" [(ngModel)]="nuevaVenta.cantidad" name="cantidad" class="form-control" required min="1">
     </div>
     <button type="submit" class="btn btn-primary">Agregar Venta</button>
   </form>
@@ -34,8 +34,8 @@
     <tbody>
       <tr *ngFor="let venta of ventas">
         <td>{{ venta.id }}</td>
-        <td>{{ venta.cliente.nombreCompleto }}</td>
-        <td>{{ venta.producto.nombre }}</td>
+        <td>{{ venta.clienteNombre }}</td> <!-- Mostrar el nombre del cliente -->
+        <td>{{ venta.productoNombre }}</td> <!-- Mostrar el nombre del producto -->
         <td>{{ venta.cantidad }}</td>
         <td>{{ venta.precioUnitario }}</td>
         <td>{{ venta.descuento }}</td>

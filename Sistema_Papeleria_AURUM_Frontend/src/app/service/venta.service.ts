@@ -17,7 +17,13 @@ export class VentaService {
   }
 
   createVenta(venta: Venta): Observable<Venta> {
-    return this.http.post<Venta>(`${this.baseUrl}`, venta);
+    const payload = {
+        clienteId: venta.cliente.id,
+        productoId: venta.producto.id,
+        cantidad: venta.cantidad
+    };
+    console.log('Enviando datos al backend:', payload); // Imprimir los datos enviados
+    return this.http.post<Venta>(`${this.baseUrl}`, payload);
   }
 
   getVentaById(id: number): Observable<Venta> {

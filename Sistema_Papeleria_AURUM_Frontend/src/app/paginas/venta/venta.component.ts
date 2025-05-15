@@ -23,7 +23,7 @@ export class VentaComponent implements OnInit {
   listarVentas(): void {
     this.ventaService.getVentas().subscribe(
       data => {
-        this.ventas = data;
+        this.ventas = data; // Asignar directamente los datos recibidos
         console.log('Ventas:', this.ventas);
       },
       error => {
@@ -33,9 +33,26 @@ export class VentaComponent implements OnInit {
   }
 
   agregarVenta(): void {
+    console.log('Datos de la nueva venta:', this.nuevaVenta); // Imprimir los datos antes de enviarlos
+
+    // Validar que los datos sean correctos
+    if (!this.nuevaVenta.cliente.id || this.nuevaVenta.cliente.id <= 0) {
+      console.error('ID Cliente inválido');
+      return;
+    }
+    if (!this.nuevaVenta.producto.id || this.nuevaVenta.producto.id <= 0) {
+      console.error('ID Producto inválido');
+      return;
+    }
+    if (this.nuevaVenta.cantidad <= 0) {
+      console.error('Cantidad inválida');
+      return;
+    }
+
     this.ventaService.createVenta(this.nuevaVenta).subscribe(
       data => {
         console.log('Venta creada:', data);
+        this.nuevaVenta = new Venta(0, new Cliente(0, '', '', '', ''), new Productos(0, '', '', 0, 0, 0), 0, 0, 0, 0, new Date());
         this.listarVentas(); // Actualizar la lista de ventas
       },
       error => {

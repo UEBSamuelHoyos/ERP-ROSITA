@@ -1,6 +1,4 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.controlador;
-
-import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Ventas;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.VentasService;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.VentasDTO;
 import org.springframework.beans.factory.annotation.Autowired;

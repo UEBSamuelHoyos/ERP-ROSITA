@@ -3,13 +3,15 @@ package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo;
 public class VentasDTO {
     private Long id;
     private Long clienteId;
+    private String clienteNombre; // Nueva propiedad
     private Long productoId;
-    private Integer cantidad;
-    private Double precioUnitario;
-    private Double descuento;
-    private Double total;
+    private String productoNombre; // Nueva propiedad
+    private int cantidad;
+    private double precioUnitario;
+    private double descuento;
+    private double total;
 
-    // Getters y Setters
+    // Getters y setters
     public Long getId() {
         return id;
     }
@@ -26,6 +28,14 @@ public class VentasDTO {
         this.clienteId = clienteId;
     }
 
+    public String getClienteNombre() {
+        return clienteNombre;
+    }
+
+    public void setClienteNombre(String clienteNombre) {
+        this.clienteNombre = clienteNombre;
+    }
+
     public Long getProductoId() {
         return productoId;
     }
@@ -34,35 +44,43 @@ public class VentasDTO {
         this.productoId = productoId;
     }
 
-    public Integer getCantidad() {
+    public String getProductoNombre() {
+        return productoNombre;
+    }
+
+    public void setProductoNombre(String productoNombre) {
+        this.productoNombre = productoNombre;
+    }
+
+    public int getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(Integer cantidad) {
+    public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
 
-    public Double getPrecioUnitario() {
+    public double getPrecioUnitario() {
         return precioUnitario;
     }
 
-    public void setPrecioUnitario(Double precioUnitario) {
+    public void setPrecioUnitario(double precioUnitario) {
         this.precioUnitario = precioUnitario;
     }
 
-    public Double getDescuento() {
+    public double getDescuento() {
         return descuento;
     }
 
-    public void setDescuento(Double descuento) {
+    public void setDescuento(double descuento) {
         this.descuento = descuento;
     }
 
-    public Double getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(Double total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 }

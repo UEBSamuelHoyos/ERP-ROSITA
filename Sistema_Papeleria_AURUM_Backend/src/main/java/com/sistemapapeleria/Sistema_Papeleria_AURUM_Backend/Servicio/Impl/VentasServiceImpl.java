@@ -52,7 +52,7 @@ public class VentasServiceImpl implements VentasService {
 
         // Reducir el stock del producto
         producto.reducirStock(dto.getCantidad());
-        productosRepository.save(producto);
+        productosRepository.save(producto); // Persistir los cambios en el producto
 
         Ventas saved = ventasRepository.save(venta);
         return mapToDTO(saved);
@@ -81,7 +81,9 @@ public class VentasServiceImpl implements VentasService {
         VentasDTO dto = new VentasDTO();
         dto.setId(entity.getId());
         dto.setClienteId(entity.getCliente().getId());
+        dto.setClienteNombre(entity.getCliente().getNombreCompleto()); // Incluir el nombre del cliente
         dto.setProductoId(entity.getProducto().getId());
+        dto.setProductoNombre(entity.getProducto().getNombre()); // Incluir el nombre del producto
         dto.setCantidad(entity.getCantidad());
         dto.setPrecioUnitario(entity.getPrecioUnitario());
         dto.setDescuento(entity.getDescuento());
