@@ -11,6 +11,7 @@ import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Cliente;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Productos;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Inventario;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.VentaProducto;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Facturas;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.VentasDTO;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.VentaProductoDTO;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.VentasService;
@@ -19,6 +20,7 @@ import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.ClienteR
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.ProductosRepository;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.InventarioRepository;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.VentaProductoRepository;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.FacturasRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +35,7 @@ public class VentasServiceImpl implements VentasService {
     private final ProductosRepository productosRepository;
     private final InventarioRepository inventarioRepository;
     private final VentaProductoRepository ventaProductoRepository;
+    private final FacturasRepository facturasRepository;
 
     @Autowired
     public VentasServiceImpl(
@@ -40,13 +43,15 @@ public class VentasServiceImpl implements VentasService {
         ClienteRepository clienteRepository,
         ProductosRepository productosRepository,
         InventarioRepository inventarioRepository,
-        VentaProductoRepository ventaProductoRepository
+        VentaProductoRepository ventaProductoRepository,
+        FacturasRepository facturasRepository
     ) {
         this.ventasRepository = ventasRepository;
         this.clienteRepository = clienteRepository;
         this.productosRepository = productosRepository;
         this.inventarioRepository = inventarioRepository;
         this.ventaProductoRepository = ventaProductoRepository;
+        this.facturasRepository = facturasRepository;
     }
 
     @Override
@@ -99,6 +104,29 @@ public class VentasServiceImpl implements VentasService {
 
             Ventas saved = ventasRepository.save(venta);
             ventaProductoRepository.saveAll(ventaProductos);
+
+            // === Crear la factura automáticamente ===
+            Facturas factura = new Facturas();
+            factura.setCliente(cliente);
+            factura.setFecha(saved.getFecha());
+            factura.setTotal(saved.getTotal());
+            factura.setEstado("GENERADA");
+
+            // Guardar la factura primero (sin ventas asociadas)
+            Facturas savedFactura = facturasRepository.save(factura);
+
+            // Relacionar la venta con la factura
+            saved.setFactura(savedFactura);
+            ventasRepository.save(saved);
+
+            // Relacionar la factura con la venta (bidireccional, sin sobrescribir otras ventas)
+            List<Ventas> ventasList = savedFactura.getVentas();
+            if (ventasList == null) {
+                ventasList = new java.util.ArrayList<>();
+            }
+            ventasList.add(saved);
+            savedFactura.setVentas(ventasList);
+            facturasRepository.save(savedFactura);
 
             return mapToDTO(saved);
         } catch (RuntimeException ex) {

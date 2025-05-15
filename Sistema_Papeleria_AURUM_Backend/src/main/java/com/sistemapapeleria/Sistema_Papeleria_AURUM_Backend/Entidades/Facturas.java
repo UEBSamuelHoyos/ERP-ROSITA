@@ -1,6 +1,7 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades;
 
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +10,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.FetchType;
 
 @Entity
 @Table(name = "facturas")
@@ -18,7 +23,10 @@ public class Facturas {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long clienteId;
+    // Relación con cliente
+    @ManyToOne
+    @JoinColumn(name = "cliente_id", nullable = false)
+    private Cliente cliente;
 
     @Temporal(TemporalType.DATE)
     private Date fecha;
@@ -26,6 +34,9 @@ public class Facturas {
     private Double total;
 
     private String estado;
+
+    @OneToMany(mappedBy = "factura", fetch = FetchType.EAGER)
+    private List<Ventas> ventas = new java.util.ArrayList<>();
 
     public Long getId() {
         return id;
@@ -35,12 +46,12 @@ public class Facturas {
         this.id = id;
     }
 
-    public Long getClienteId() {
-        return clienteId;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setClienteId(Long clienteId) {
-        this.clienteId = clienteId;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public Date getFecha() {
@@ -67,5 +78,24 @@ public class Facturas {
         this.estado = estado;
     }
 
-   
+    public List<Ventas> getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(List<Ventas> ventas) {
+        this.ventas = ventas;
+    }
+
+    // Métodos para compatibilidad con getClienteId/setClienteId
+    public Long getClienteId() {
+        return cliente != null ? cliente.getId() : null;
+    }
+
+    public void setClienteId(Long clienteId) {
+        if (this.cliente == null) {
+            this.cliente = new Cliente();
+        }
+        this.cliente.setId(clienteId);
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,11 @@ public class Ventas {
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "factura_id")
+    @JsonIgnore
+    private Facturas factura;
 
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<VentaProducto> productos;
@@ -39,6 +45,14 @@ public class Ventas {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public Facturas getFactura() {
+        return factura;
+    }
+
+    public void setFactura(Facturas factura) {
+        this.factura = factura;
     }
 
     public List<VentaProducto> getProductos() {

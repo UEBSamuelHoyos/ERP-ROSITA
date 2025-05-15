@@ -4,49 +4,43 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.FacturasDTO;
-import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.FacturasService;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.FacturaDTO;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.FacturaService;
 
 @RestController
 @RequestMapping("/api/facturas")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200") // Cambia aquí el origen
 public class FacturasController {
 
-    private final FacturasService facturasService;
+    private final FacturaService facturaService;
 
     @Autowired
-    public FacturasController(FacturasService facturasService) {
-        this.facturasService = facturasService;
+    public FacturasController(FacturaService facturaService) {
+        this.facturaService = facturaService;
     }
 
     @PostMapping
-    public ResponseEntity<FacturasDTO> crear(@RequestBody FacturasDTO dto) {
-        return ResponseEntity.ok(facturasService.saveFactura(dto));
+    public ResponseEntity<FacturaDTO> crear(@RequestBody FacturaDTO dto) {
+        // Cambia esto para que devuelva un error claro si se intenta crear una factura manualmente
+        throw new UnsupportedOperationException("Las facturas se generan automáticamente al registrar una venta.");
     }
 
     @GetMapping
-    public ResponseEntity<List<FacturasDTO>> listarTodas() {
-        return ResponseEntity.ok(facturasService.getAllFacturas());
+    public ResponseEntity<List<FacturaDTO>> listarTodas() {
+        return ResponseEntity.ok(facturaService.getAllFacturas());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FacturasDTO> buscarPorId(@PathVariable Long id) {
-        FacturasDTO dto = facturasService.getFacturaById(id);
+    public ResponseEntity<FacturaDTO> buscarPorId(@PathVariable Long id) {
+        FacturaDTO dto = facturaService.getFacturaById(id);
         return dto != null ? ResponseEntity.ok(dto) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        facturasService.deleteFactura(id);
+        facturaService.deleteFactura(id);
         return ResponseEntity.noContent().build();
     }
 }

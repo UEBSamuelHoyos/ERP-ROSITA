@@ -1,0 +1,35 @@
+<div class="container mt-4">
+  <h2>Facturas</h2>
+  <div *ngIf="loading">Cargando facturas...</div>
+  <table class="table table-bordered" *ngIf="!loading && facturas.length > 0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Cliente</th>
+        <th>Fecha</th>
+        <th>Total</th>
+        <th>Estado</th>
+        <th>Ventas asociadas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let factura of facturas">
+        <td>{{ factura.id }}</td>
+        <td>{{ factura.clienteId }}</td>
+        <td>{{ factura.fecha | date:'short' }}</td>
+        <td>{{ factura.total }}</td>
+        <td>{{ factura.estado }}</td>
+        <td>
+          <ul>
+            <li *ngFor="let venta of factura.ventas">
+              Venta ID: {{ venta.id }}, Cliente: {{ venta.clienteNombre }}, Total: {{ venta.total }}, Fecha: {{ venta.fecha | date:'short' }}
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="!loading && facturas.length === 0" class="alert alert-info">
+    No hay facturas registradas.
+  </div>
+</div>

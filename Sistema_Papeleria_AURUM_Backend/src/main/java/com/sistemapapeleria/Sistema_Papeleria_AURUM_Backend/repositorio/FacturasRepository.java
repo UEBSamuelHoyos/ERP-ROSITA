@@ -1,10 +1,9 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Facturas;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 
-@Repository
 public interface FacturasRepository extends JpaRepository<Facturas, Long> {
+    List<Facturas> findByCliente_Id(Long clienteId);
 }

@@ -18,7 +18,7 @@ export class TabsComponent {
     "/Venta",        // 2
     "/Cliente",      // 3
     "/inventario",   // 4
-    "/Factura",      // 5
+    "/Facturas",      // 5
     "/Proveedores",  // 6
     "/Empleados",    // 7
     "/Impuestos",    // 8

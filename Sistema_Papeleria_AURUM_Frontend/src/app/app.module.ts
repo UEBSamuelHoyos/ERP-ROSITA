@@ -14,6 +14,7 @@ import { DevolucionesComponent } from './paginas/devoluciones/devoluciones.compo
 import { InventarioComponent } from './paginas/inventario/inventario.component';
 import { HomeComponent } from './paginas/home/home.component';
 import { VentaComponent } from './paginas/venta/venta.component';
+import { FacturasComponent } from './paginas/facturas/facturas.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { VentaComponent } from './paginas/venta/venta.component';
     DevolucionesComponent,
     VentaComponent,
     HomeComponent,
+    FacturasComponent,
   
   ],
   imports: [
