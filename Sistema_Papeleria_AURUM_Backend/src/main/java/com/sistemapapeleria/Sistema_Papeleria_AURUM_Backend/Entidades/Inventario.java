@@ -1,33 +1,23 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades;
 
+import jakarta.persistence.*;
 import java.util.Date;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-
 @Entity
-@Table(name = "inventario")
 public class Inventario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne
+    @JoinColumn(name = "producto_id", referencedColumnName = "id", nullable = false)
+    private Productos producto;
+
     private String categoria;
-
-    @Temporal(TemporalType.DATE)
-    private Date fechaIngreso;
-
     private String nombreProducto;
-
-    private Long idProducto;
-
-    private Integer cantidadProducto;
+    private int cantidadProducto;
+    private Date fechaIngreso;
 
     public Long getId() {
         return id;
@@ -35,6 +25,14 @@ public class Inventario {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Productos getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Productos producto) {
+        this.producto = producto;
     }
 
     public String getCategoria() {
@@ -45,14 +43,6 @@ public class Inventario {
         this.categoria = categoria;
     }
 
-    public Date getFechaIngreso() {
-        return fechaIngreso;
-    }
-
-    public void setFechaIngreso(Date fechaIngreso) {
-        this.fechaIngreso = fechaIngreso;
-    }
-
     public String getNombreProducto() {
         return nombreProducto;
     }
@@ -61,19 +51,19 @@ public class Inventario {
         this.nombreProducto = nombreProducto;
     }
 
-    public Long getIdProducto() {
-        return idProducto;
-    }
-
-    public void setIdProducto(Long idProducto) {
-        this.idProducto = idProducto;
-    }
-
-    public Integer getCantidadProducto() {
+    public int getCantidadProducto() {
         return cantidadProducto;
     }
 
-    public void setCantidadProducto(Integer cantidadProducto) {
+    public void setCantidadProducto(int cantidadProducto) {
         this.cantidadProducto = cantidadProducto;
+    }
+
+    public Date getFechaIngreso() {
+        return fechaIngreso;
+    }
+
+    public void setFechaIngreso(Date fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
     }
 }

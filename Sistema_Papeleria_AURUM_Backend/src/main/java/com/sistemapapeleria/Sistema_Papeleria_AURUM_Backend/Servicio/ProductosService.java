@@ -9,4 +9,5 @@ public interface ProductosService {
     List<ProductosDTO> getAllProductos();
     ProductosDTO getProductoById(Long id);
     void deleteProducto(Long id);
+    ProductosDTO updateProducto(Long id, ProductosDTO dto);
 }

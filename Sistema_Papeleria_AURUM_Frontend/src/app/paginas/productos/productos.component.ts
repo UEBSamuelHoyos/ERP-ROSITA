@@ -8,44 +8,42 @@ import { ProductosService } from 'src/app/service/productos.service';
   styleUrls: ['./productos.component.scss']
 })
 export class ProductosComponent implements OnInit {
-
-  id: number = 1;
-  nombre: string = '';
-  categoria: string = '';
-  precioCompra: number = 0;
-  precioVenta: number = 0;
-  stock: number = 0;
-  
-
   productos: Productos[] = [];
+  productoSeleccionado: Productos = new Productos(0, '', '', 0, 0, 0);
 
   constructor(private productosService: ProductosService) {}
 
   ngOnInit(): void {
-    this.listProductos();
+    this.listarProductos();
   }
 
-  listProductos() {
-    this.productosService.getProductosList().subscribe(
+  listarProductos(): void {
+    this.productosService.getProductos().subscribe(
       data => {
         this.productos = data;
-        console.log(this.productos);
+      },
+      error => {
+        console.error('Error al obtener los productos:', error);
       }
     );
   }
 
-  addProducto() {
-    let producto = new Productos(this.id, this.nombre, this.categoria, this.precioCompra, this.precioVenta, this.stock);
-    console.log(producto);
-    this.productosService.createProducto(producto).subscribe(
-      res => console.log(res)
-    );
+  seleccionarProducto(producto: Productos): void {
+    this.productoSeleccionado = { ...producto }; // Clonar el producto seleccionado
   }
 
-  deleteProducto(id: number) {
-    console.log(id);
-    this.productosService.deleteProducto(id).subscribe(
-      () => this.listProductos()
-    );
+  actualizarProducto(): void {
+    if (this.productoSeleccionado.id) {
+      this.productosService.updateProducto(this.productoSeleccionado.id, this.productoSeleccionado).subscribe(
+        data => {
+          console.log('Producto actualizado:', data);
+          this.listarProductos(); // Actualizar la lista de productos
+          this.productoSeleccionado = new Productos(0, '', '', 0, 0, 0); // Limpiar el formulario
+        },
+        error => {
+          console.error('Error al actualizar el producto:', error);
+        }
+      );
+    }
   }
 }

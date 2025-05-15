@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Productos } from '../clases/productos';
 
@@ -7,20 +7,27 @@ import { Productos } from '../clases/productos';
   providedIn: 'root'
 })
 export class ProductosService {
-
-  private api: string = 'http://localhost:8080/api/Productos';
+  private baseUrl = 'http://localhost:8080/api/productos'; // URL del backend
 
   constructor(private http: HttpClient) {}
 
-  getProductosList(): Observable<Productos[]> {
-    return this.http.get<Productos[]>(this.api);
+  getProductos(): Observable<Productos[]> {
+    return this.http.get<Productos[]>(`${this.baseUrl}`);
+  }
+
+  getProductoById(id: number): Observable<Productos> {
+    return this.http.get<Productos>(`${this.baseUrl}/${id}`);
   }
 
   createProducto(producto: Productos): Observable<Productos> {
-    return this.http.post<Productos>(this.api, producto);
+    return this.http.post<Productos>(`${this.baseUrl}`, producto);
   }
 
-  deleteProducto(id: number): Observable<any> {
-    return this.http.delete(this.api + '/' + id);
+  updateProducto(id: number, producto: Productos): Observable<Productos> {
+    return this.http.put<Productos>(`${this.baseUrl}/${id}`, producto);
+  }
+
+  deleteProducto(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }

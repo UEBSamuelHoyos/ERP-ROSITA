@@ -1,11 +1,11 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio;
 
-import java.util.List;
-
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.InventarioDTO;
 
+import java.util.List;
+
 public interface InventarioService {
-    InventarioDTO saveInventario(InventarioDTO inventarioDTO);
+    InventarioDTO saveInventario(InventarioDTO dto);
     List<InventarioDTO> getAllInventario();
     InventarioDTO getInventarioById(Long id);
     void deleteInventario(Long id);

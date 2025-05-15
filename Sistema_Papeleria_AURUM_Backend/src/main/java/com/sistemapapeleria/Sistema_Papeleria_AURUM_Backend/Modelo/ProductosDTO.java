@@ -1,17 +1,18 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo;
 
 public class ProductosDTO {
-    private long id;
+    private Long id;
     private String nombre;
     private String categoria;
     private double precioCompra;
     private double precioVenta;
     private int stock;
-    
-    public long getId() {
+
+    // Getters y setters
+    public Long getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getNombre() {
@@ -44,8 +45,4 @@ public class ProductosDTO {
     public void setStock(int stock) {
         this.stock = stock;
     }
-
-
-
-    
 }

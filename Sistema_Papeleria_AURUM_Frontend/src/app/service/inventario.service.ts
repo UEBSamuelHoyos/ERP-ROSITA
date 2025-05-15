@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Inventario } from '../clases/inventario';
 
@@ -8,19 +8,15 @@ import { Inventario } from '../clases/inventario';
 })
 export class InventarioService {
 
-  private api: string = 'http://localhost:8080/api/Inventario';
+  private baseUrl = 'http://localhost:8080/api/Inventario'; // URL del backend
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getInventarioList(): Observable<Inventario[]> {
-    return this.http.get<Inventario[]>(this.api);
+    return this.http.get<Inventario[]>(`${this.baseUrl}`);
   }
 
-  createInventario(inventario: Inventario): Observable<Inventario> {
-    return this.http.post<Inventario>(this.api, inventario);
-  }
-
-  deleteInventario(id: number): Observable<any> {
-    return this.http.delete(this.api + '/' + id);
+  getInventarioById(id: number): Observable<Inventario> {
+    return this.http.get<Inventario>(`${this.baseUrl}/${id}`);
   }
 }

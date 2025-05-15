@@ -9,11 +9,13 @@ import org.springframework.stereotype.Service;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Ventas;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Cliente;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Productos;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Inventario;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.VentasDTO;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.VentasService;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.VentasRepository;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.ClienteRepository;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.ProductosRepository;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.InventarioRepository;
 
 @Service
 public class VentasServiceImpl implements VentasService {
@@ -21,12 +23,15 @@ public class VentasServiceImpl implements VentasService {
     private final VentasRepository ventasRepository;
     private final ClienteRepository clienteRepository;
     private final ProductosRepository productosRepository;
+    private final InventarioRepository inventarioRepository; // Repositorio de inventario
 
     @Autowired
-    public VentasServiceImpl(VentasRepository ventasRepository, ClienteRepository clienteRepository, ProductosRepository productosRepository) {
+    public VentasServiceImpl(VentasRepository ventasRepository, ClienteRepository clienteRepository, 
+                             ProductosRepository productosRepository, InventarioRepository inventarioRepository) {
         this.ventasRepository = ventasRepository;
         this.clienteRepository = clienteRepository;
         this.productosRepository = productosRepository;
+        this.inventarioRepository = inventarioRepository; // Inyectar el repositorio de inventario
     }
 
     @Override
@@ -53,6 +58,12 @@ public class VentasServiceImpl implements VentasService {
         // Reducir el stock del producto
         producto.reducirStock(dto.getCantidad());
         productosRepository.save(producto); // Persistir los cambios en el producto
+
+        // Actualizar el inventario
+        Inventario inventario = inventarioRepository.findByProducto_Id(producto.getId())
+                .orElseThrow(() -> new RuntimeException("Inventario no encontrado para el producto"));
+        inventario.setCantidadProducto(producto.getStock());
+        inventarioRepository.save(inventario); // Persistir los cambios en el inventario
 
         Ventas saved = ventasRepository.save(venta);
         return mapToDTO(saved);

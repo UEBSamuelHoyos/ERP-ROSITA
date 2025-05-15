@@ -1,74 +1,55 @@
-<div class="container mt-4">
-  <h1 class="mb-4">Gestión de Productos</h1>
-  
-  <!-- Formulario de registro -->
-  <div class="card mb-4">
-    <div class="card-header bg-primary text-white">
-      <h2 class="h5 mb-0">Registrar Producto</h2>
+<div class="container">
+  <h2>Gestión de Productos</h2>
+
+  <form (ngSubmit)="actualizarProducto()">
+    <div class="form-group">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" [(ngModel)]="productoSeleccionado.nombre" name="nombre" class="form-control" required>
     </div>
-    <div class="card-body">
-      <form>
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="nombre" class="form-label">Nombre</label>
-            <input [(ngModel)]="nombre" type="text" class="form-control" id="nombre" name="nombre">
-          </div>
-          <div class="col-md-6">
-            <label for="categoria" class="form-label">Categoría</label>
-            <input [(ngModel)]="categoria" type="text" class="form-control" id="categoria" name="categoria">
-          </div>
-        </div>
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="precioCompra" class="form-label">Precio de Compra</label>
-            <input [(ngModel)]="precioCompra" type="number" class="form-control" id="precioCompra" name="precioCompra">
-          </div>
-          <div class="col-md-6">
-            <label for="precioVenta" class="form-label">Precio de Venta</label>
-            <input [(ngModel)]="precioVenta" type="number" class="form-control" id="precioVenta" name="precioVenta">
-          </div>
-        </div>
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="stock" class="form-label">Stock</label>
-            <input [(ngModel)]="stock" type="number" class="form-control" id="stock" name="stock">
-          </div>
-        </div>
-        <button type="button" class="btn btn-primary" (click)="addProducto()">Crear</button>
-      </form>
+    <div class="form-group">
+      <label for="categoria">Categoría:</label>
+      <input type="text" id="categoria" [(ngModel)]="productoSeleccionado.categoria" name="categoria" class="form-control" required>
     </div>
-  </div>
-  
-  <!-- Tabla de productos -->
-  <div class="card">
-    <div class="card-header bg-light">
-      <h2 class="h5 mb-0">Lista de Productos</h2>
+    <div class="form-group">
+      <label for="precioCompra">Precio de Compra:</label>
+      <input type="number" id="precioCompra" [(ngModel)]="productoSeleccionado.precioCompra" name="precioCompra" class="form-control" required>
     </div>
-    <div class="card-body p-0">
-      <table class="table table-striped table-hover mb-0">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Categoría</th>
-            <th>Precio Compra</th>
-            <th>Precio Venta</th>
-            <th>Stock</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let p of productos">
-            <td>{{ p.id }}</td>
-            <td>{{ p.nombre }}</td>
-            <td>{{ p.categoria }}</td>
-            <td>{{ p.precioCompra }}</td>
-            <td>{{ p.precioVenta }}</td>
-            <td>{{ p.stock }}</td>
-            <td><button class="btn btn-sm btn-danger" (click)="deleteProducto(p.id)">Eliminar</button></td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="form-group">
+      <label for="precioVenta">Precio de Venta:</label>
+      <input type="number" id="precioVenta" [(ngModel)]="productoSeleccionado.precioVenta" name="precioVenta" class="form-control" required>
     </div>
-  </div>
+    <div class="form-group">
+      <label for="stock">Stock:</label>
+      <input type="number" id="stock" [(ngModel)]="productoSeleccionado.stock" name="stock" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Actualizar Producto</button>
+  </form>
+
+  <h3>Lista de Productos</h3>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Categoría</th>
+        <th>Precio Compra</th>
+        <th>Precio Venta</th>
+        <th>Stock</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let producto of productos">
+        <td>{{ producto.id }}</td>
+        <td>{{ producto.nombre }}</td>
+        <td>{{ producto.categoria }}</td>
+        <td>{{ producto.precioCompra }}</td>
+        <td>{{ producto.precioVenta }}</td>
+        <td>{{ producto.stock }}</td>
+        <td>
+          <button class="btn btn-warning" (click)="seleccionarProducto(producto)">Editar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

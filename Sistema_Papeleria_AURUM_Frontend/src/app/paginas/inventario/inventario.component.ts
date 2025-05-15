@@ -9,41 +9,23 @@ import { InventarioService } from 'src/app/service/inventario.service';
 })
 export class InventarioComponent implements OnInit {
 
-  categoria: string = '';
-  fechaIngreso: Date = new Date();
-  nombreProducto: string = '';
-  idProducto: number = 0;
-  cantidadProducto: number = 0;
-
   inventario: Inventario[] = [];
 
   constructor(private inventarioService: InventarioService) {}
 
   ngOnInit(): void {
-    this.listInventario();
+    this.listarInventario();
   }
 
-  listInventario() {
+  listarInventario(): void {
     this.inventarioService.getInventarioList().subscribe(
       data => {
         this.inventario = data;
-        console.log(this.inventario);
+        console.log('Inventario:', this.inventario);
+      },
+      error => {
+        console.error('Error al obtener el inventario:', error);
       }
-    );
-  }
-
-  addInventario() {
-    let item = new Inventario(this.categoria, this.fechaIngreso, this.nombreProducto, this.idProducto, this.cantidadProducto);
-    console.log(item);
-    this.inventarioService.createInventario(item).subscribe(
-      res => console.log(res)
-    );
-  }
-
-  deleteInventario(id: number) {
-    console.log(id);
-    this.inventarioService.deleteInventario(id).subscribe(
-      () => this.listInventario()
     );
   }
 }
