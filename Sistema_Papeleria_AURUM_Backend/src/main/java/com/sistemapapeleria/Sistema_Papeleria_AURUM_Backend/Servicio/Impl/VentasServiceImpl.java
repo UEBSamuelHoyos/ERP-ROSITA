@@ -88,6 +88,7 @@ public class VentasServiceImpl implements VentasService {
         dto.setPrecioUnitario(entity.getPrecioUnitario());
         dto.setDescuento(entity.getDescuento());
         dto.setTotal(entity.getTotal());
+        dto.setFecha(entity.getFecha()); // Asignar la fecha de la venta
         return dto;
     }
 }

@@ -1,5 +1,7 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo;
 
+import java.util.Date;
+
 public class VentasDTO {
     private Long id;
     private Long clienteId;
@@ -10,6 +12,7 @@ public class VentasDTO {
     private double precioUnitario;
     private double descuento;
     private double total;
+    private Date fecha; // Nueva propiedad
 
     // Getters y setters
     public Long getId() {
@@ -82,5 +85,13 @@ public class VentasDTO {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 }
