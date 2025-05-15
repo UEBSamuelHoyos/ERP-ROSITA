@@ -1,52 +1,46 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.controlador;
 
-import java.util.List;
-
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Ventas;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.VentasService;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.VentasDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.VentasDTO;
-import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.VentasService;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/ventas")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 public class VentasController {
 
-    private final VentasService ventasService;
-
     @Autowired
-    public VentasController(VentasService ventasService) {
-        this.ventasService = ventasService;
-    }
+    private VentasService ventasServicio;
 
     @PostMapping
-    public ResponseEntity<VentasDTO> crear(@RequestBody VentasDTO dto) {
-        return ResponseEntity.ok(ventasService.saveVenta(dto));
+    public ResponseEntity<?> crearVenta(@RequestBody VentasDTO ventaDTO) {
+        try {
+            VentasDTO nuevaVenta = ventasServicio.saveVenta(ventaDTO);
+            return ResponseEntity.ok(nuevaVenta);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping
-    public ResponseEntity<List<VentasDTO>> listarTodos() {
-        return ResponseEntity.ok(ventasService.getAllVentas());
+    public ResponseEntity<List<VentasDTO>> obtenerVentas() {
+        return ResponseEntity.ok(ventasServicio.getAllVentas());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<VentasDTO> buscarPorId(@PathVariable Long id) {
-        VentasDTO dto = ventasService.getVentaById(id);
-        return dto != null ? ResponseEntity.ok(dto) : ResponseEntity.notFound().build();
+    public ResponseEntity<?> obtenerVentaPorId(@PathVariable Long id) {
+        VentasDTO venta = ventasServicio.getVentaById(id);
+        return venta != null ? ResponseEntity.ok(venta) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        ventasService.deleteVenta(id);
+    public ResponseEntity<Void> eliminarVenta(@PathVariable Long id) {
+        ventasServicio.deleteVenta(id);
         return ResponseEntity.noContent().build();
     }
 }

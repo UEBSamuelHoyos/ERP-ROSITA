@@ -42,35 +42,34 @@ public class ProductosServiceImpl implements ProductosService {
     }
 
     // Buscar productos por nombre (contiene)
-public List<ProductosDTO> buscarPorNombre(String nombre) {
-    return productosRepository.findByNombreContainingIgnoreCase(nombre)
-            .stream().map(this::mapToDTO).collect(Collectors.toList());
-}
+    public List<ProductosDTO> buscarPorNombre(String nombre) {
+        return productosRepository.findByNombreContainingIgnoreCase(nombre)
+                .stream().map(this::mapToDTO).collect(Collectors.toList());
+    }
 
-// Buscar productos por categoría exacta (sin importar mayúsculas)
-public List<ProductosDTO> buscarPorCategoria(String categoria) {
-    return productosRepository.findByCategoriaIgnoreCase(categoria)
-            .stream().map(this::mapToDTO).collect(Collectors.toList());
-}
+    // Buscar productos por categoría exacta (sin importar mayúsculas)
+    public List<ProductosDTO> buscarPorCategoria(String categoria) {
+        return productosRepository.findByCategoriaIgnoreCase(categoria)
+                .stream().map(this::mapToDTO).collect(Collectors.toList());
+    }
 
-// Buscar productos con stock menor a cierto límite
-public List<ProductosDTO> buscarStockBajo(int limite) {
-    return productosRepository.findByStockLessThan(limite)
-            .stream().map(this::mapToDTO).collect(Collectors.toList());
-}
+    // Buscar productos con stock menor a cierto límite
+    public List<ProductosDTO> buscarStockBajo(int limite) {
+        return productosRepository.findByStockLessThan(limite)
+                .stream().map(this::mapToDTO).collect(Collectors.toList());
+    }
 
-// Buscar productos por rango de precio
-public List<ProductosDTO> buscarPorRangoPrecio(double min, double max) {
-    return productosRepository.findByPrecioVentaBetween(min, max)
-            .stream().map(this::mapToDTO).collect(Collectors.toList());
-}
+    // Buscar productos por rango de precio
+    public List<ProductosDTO> buscarPorRangoPrecio(double min, double max) {
+        return productosRepository.findByPrecioVentaBetween(min, max)
+                .stream().map(this::mapToDTO).collect(Collectors.toList());
+    }
 
-// Buscar productos con al menos X unidades en stock
-public List<ProductosDTO> buscarDisponibles(int minStock) {
-    return productosRepository.findByStockGreaterThanEqual(minStock)
-            .stream().map(this::mapToDTO).collect(Collectors.toList());
-}
-
+    // Buscar productos con al menos X unidades en stock
+    public List<ProductosDTO> buscarDisponibles(int minStock) {
+        return productosRepository.findByStockGreaterThanEqual(minStock)
+                .stream().map(this::mapToDTO).collect(Collectors.toList());
+    }
 
     @Override
     public ProductosDTO getProductoById(Long id) {
@@ -95,6 +94,14 @@ public List<ProductosDTO> buscarDisponibles(int minStock) {
             Productos actualizado = productosRepository.save(producto);
             return mapToDTO(actualizado);
         }).orElse(null);
+    }
+
+    public ProductosDTO reducirStock(Long id, int cantidad) {
+        return productosRepository.findById(id).map(producto -> {
+            producto.reducirStock(cantidad);
+            Productos actualizado = productosRepository.save(producto);
+            return mapToDTO(actualizado);
+        }).orElseThrow(() -> new RuntimeException("Producto no encontrado con el ID: " + id));
     }
 
     private ProductosDTO mapToDTO(Productos entity) {

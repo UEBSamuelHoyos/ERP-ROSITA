@@ -1,7 +1,7 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio;
 
-import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.VentasDTO;
 import java.util.List;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.VentasDTO;
 
 public interface VentasService {
     VentasDTO saveVenta(VentasDTO ventaDTO);

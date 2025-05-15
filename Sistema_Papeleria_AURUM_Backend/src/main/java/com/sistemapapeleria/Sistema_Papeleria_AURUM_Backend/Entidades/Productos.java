@@ -68,7 +68,11 @@ public class Productos {
         this.stock = stock;
     }
 
-
-
+    public void reducirStock(int cantidad) {
+        if (this.stock < cantidad) {
+            throw new RuntimeException("Stock insuficiente para el producto: " + this.nombre);
+        }
+        this.stock -= cantidad;
+    }
     
 }

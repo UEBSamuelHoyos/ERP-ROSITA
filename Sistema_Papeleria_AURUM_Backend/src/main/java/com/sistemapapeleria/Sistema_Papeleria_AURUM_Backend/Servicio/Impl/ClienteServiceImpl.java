@@ -28,6 +28,7 @@ public class ClienteServiceImpl implements ClienteService {
         cliente.setNombreCompleto(ClientesDTO.getNombreCompleto());
         cliente.setDireccion(ClientesDTO.getDireccion());
         cliente.setTelefono(ClientesDTO.getTelefono());
+        cliente.setAfiliado(ClientesDTO.isAfiliado()); // Nuevo campo
 
         Cliente saved = clienteRepository.save(cliente);
 
@@ -37,6 +38,7 @@ public class ClienteServiceImpl implements ClienteService {
         savedDTO.setNombreCompleto(saved.getNombreCompleto());
         savedDTO.setDireccion(saved.getDireccion());
         savedDTO.setTelefono(saved.getTelefono());
+        savedDTO.setAfiliado(saved.isAfiliado()); // Nuevo campo
 
         return savedDTO;
     }
@@ -48,6 +50,7 @@ public class ClienteServiceImpl implements ClienteService {
             cliente.setNombreCompleto(dto.getNombreCompleto());
             cliente.setDireccion(dto.getDireccion());
             cliente.setTelefono(dto.getTelefono());
+            cliente.setAfiliado(dto.isAfiliado()); // Nuevo campo
             Cliente actualizado = clienteRepository.save(cliente);
             return mapToDTO(actualizado);
         }).orElseThrow(() -> new RuntimeException("Cliente no encontrado con el ID: " + id));
@@ -74,6 +77,7 @@ public class ClienteServiceImpl implements ClienteService {
         dto.setNombreCompleto(cliente.getNombreCompleto());
         dto.setDireccion(cliente.getDireccion());
         dto.setTelefono(cliente.getTelefono());
+        dto.setAfiliado(cliente.isAfiliado()); // Nuevo campo
         return dto;
     }
 
@@ -88,6 +92,7 @@ public class ClienteServiceImpl implements ClienteService {
                 dto.setNombreCompleto(cliente.getNombreCompleto());
                 dto.setDireccion(cliente.getDireccion());
                 dto.setTelefono(cliente.getTelefono());
+                dto.setAfiliado(cliente.isAfiliado()); // Nuevo campo
                 return dto;
             })
             .collect(Collectors.toList());

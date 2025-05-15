@@ -1,54 +1,68 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo;
 
-import java.util.Date;
-
 public class VentasDTO {
-    private long id;
-    private long clienteId;
-    private long empleadoId;
-    private long facturaId;
-    private Date fecha;
-    private String metodoPago;
-    
-    public long getId() {
+    private Long id;
+    private Long clienteId;
+    private Long productoId;
+    private Integer cantidad;
+    private Double precioUnitario;
+    private Double descuento;
+    private Double total;
+
+    // Getters y Setters
+    public Long getId() {
         return id;
     }
-    public void setId(long id) {
+
+    public void setId(Long id) {
         this.id = id;
     }
-    public long getClienteId() {
+
+    public Long getClienteId() {
         return clienteId;
     }
-    public void setClienteId(long clienteId) {
+
+    public void setClienteId(Long clienteId) {
         this.clienteId = clienteId;
     }
-    public long getEmpleadoId() {
-        return empleadoId;
-    }
-    public void setEmpleadoId(long empleadoId) {
-        this.empleadoId = empleadoId;
-    }
-    public long getFacturaId() {
-        return facturaId;
-    }
-    public void setFacturaId(long facturaId) {
-        this.facturaId = facturaId;
-    }
-    public Date getFecha() {
-        return fecha;
-    }
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-    public String getMetodoPago() {
-        return metodoPago;
-    }
-    public void setMetodoPago(String metodoPago) {
-        this.metodoPago = metodoPago;
+
+    public Long getProductoId() {
+        return productoId;
     }
 
+    public void setProductoId(Long productoId) {
+        this.productoId = productoId;
+    }
 
-    
+    public Integer getCantidad() {
+        return cantidad;
+    }
 
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
 
+    public Double getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    public void setPrecioUnitario(Double precioUnitario) {
+        this.precioUnitario = precioUnitario;
+    }
+
+    public Double getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(Double descuento) {
+        this.descuento = descuento;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
 }

@@ -6,6 +6,7 @@ public class ClientesDTO {
     private String nombreCompleto;
     private String direccion;
     private String telefono;
+    private boolean afiliado;
     
     public long getId() {
         return id;
@@ -37,7 +38,10 @@ public class ClientesDTO {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-
-
-    
+    public boolean isAfiliado() {
+        return afiliado;
+    }
+    public void setAfiliado(boolean afiliado) {
+        this.afiliado = afiliado;
+    }
 }

@@ -17,6 +17,7 @@ public class Cliente {
     private String nombreCompleto;
     private String direccion;
     private String telefono;
+    private boolean afiliado;
     
     public Cliente(){
 
@@ -57,7 +58,12 @@ public class Cliente {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+    public boolean isAfiliado() {
+        return afiliado;
+    }
+    public void setAfiliado(boolean afiliado) {
+        this.afiliado = afiliado;
+    }
     
 }
 
-  
