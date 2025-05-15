@@ -18,6 +18,21 @@ export class ClienteService {
   }
   deleteCliente(id : number):Observable<any>{
   return this.http.delete(this.api+'/'+id);    
-  
+
+  }
+  getCliente(id: number):Observable<Cliente>{
+    return this.http.get<Cliente>(this.api+'/'+id);
+  }
+  updateCliente(id: number, cliente: Cliente): Observable<Cliente> {
+    return this.http.put<Cliente>(`${this.api}/${id}`, cliente); // Corrected endpoint
+  }
+  buscarClientePorCedula(cedula: string): Observable<Cliente> {
+    return this.http.get<Cliente>(`${this.api}/cedula/${cedula}`); // Ensure endpoint matches backend
+  }
+  buscarClientePorNombre(nombre: string): Observable<Cliente[]> {
+    return this.http.get<Cliente[]>(`${this.api}/buscar?nombre=${nombre}`); // Corrected endpoint
+  }
+  buscarClientePorId(id: number): Observable<Cliente> {
+    return this.http.get<Cliente>(`${this.api}/buscarPorId/${id}`); // Ensure endpoint matches backend
   }
 }

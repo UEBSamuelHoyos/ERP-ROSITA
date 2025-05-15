@@ -40,43 +40,42 @@ public class ClienteServiceImpl implements ClienteService {
 
         return savedDTO;
     }
-    
-public ClientesDTO updateCliente(Long id, ClientesDTO dto) {
-    return clienteRepository.findById(id).map(cliente -> {
-        cliente.setCedula(dto.getCedula());
-        cliente.setNombreCompleto(dto.getNombreCompleto());
-        cliente.setDireccion(dto.getDireccion());
-        cliente.setTelefono(dto.getTelefono());
-        Cliente actualizado = clienteRepository.save(cliente);
-        return mapToDTO(actualizado);
-    }).orElse(null);
-}
 
+    @Override
+    public ClientesDTO updateCliente(Long id, ClientesDTO dto) {
+        return clienteRepository.findById(id).map(cliente -> {
+            cliente.setCedula(dto.getCedula());
+            cliente.setNombreCompleto(dto.getNombreCompleto());
+            cliente.setDireccion(dto.getDireccion());
+            cliente.setTelefono(dto.getTelefono());
+            Cliente actualizado = clienteRepository.save(cliente);
+            return mapToDTO(actualizado);
+        }).orElseThrow(() -> new RuntimeException("Cliente no encontrado con el ID: " + id));
+    }
 
-public ClientesDTO buscarPorCedula(String cedula) {
-    return clienteRepository.findByCedula(cedula)
-            .map(this::mapToDTO)
-            .orElse(null);
-}
+    @Override
+    public ClientesDTO buscarPorCedula(String cedula) {
+        return clienteRepository.findByCedula(cedula)
+                .map(this::mapToDTO)
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado con la cédula: " + cedula));
+    }
 
+    public List<ClientesDTO> buscarPorNombre(String nombre) {
+        return clienteRepository.findByNombreCompletoContainingIgnoreCase(nombre)
+                .stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+    }
 
-public List<ClientesDTO> buscarPorNombre(String nombre) {
-    return clienteRepository.findByNombreCompletoContainingIgnoreCase(nombre)
-            .stream().map(this::mapToDTO)
-            .collect(Collectors.toList());
-}
-
-
-private ClientesDTO mapToDTO(Cliente cliente) {
-    ClientesDTO dto = new ClientesDTO();
-    dto.setId(cliente.getId());
-    dto.setCedula(cliente.getCedula());
-    dto.setNombreCompleto(cliente.getNombreCompleto());
-    dto.setDireccion(cliente.getDireccion());
-    dto.setTelefono(cliente.getTelefono());
-    return dto;
-}
-
+    private ClientesDTO mapToDTO(Cliente cliente) {
+        ClientesDTO dto = new ClientesDTO();
+        dto.setId(cliente.getId());
+        dto.setCedula(cliente.getCedula());
+        dto.setNombreCompleto(cliente.getNombreCompleto());
+        dto.setDireccion(cliente.getDireccion());
+        dto.setTelefono(cliente.getTelefono());
+        return dto;
+    }
 
     @Override
     public List<ClientesDTO> getAllClientes() {
@@ -97,16 +96,8 @@ private ClientesDTO mapToDTO(Cliente cliente) {
     @Override
     public ClientesDTO getClienteById(Long id) {
         return clienteRepository.findById(id)
-            .map(cliente -> {
-                ClientesDTO dto = new ClientesDTO();
-                dto.setId(cliente.getId());
-                dto.setCedula(cliente.getCedula());
-                dto.setNombreCompleto(cliente.getNombreCompleto());
-                dto.setDireccion(cliente.getDireccion());
-                dto.setTelefono(cliente.getTelefono());
-                return dto;
-            })
-            .orElse(null);
+            .map(this::mapToDTO) // Map the entity to DTO
+            .orElseThrow(() -> new RuntimeException("Cliente no encontrado con el ID: " + id));
     }
 
     @Override
