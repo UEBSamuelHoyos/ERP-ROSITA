@@ -34,19 +34,24 @@
     </div>
   </div>
 
-  <!-- Búsqueda por cédula o nombre -->
+  <!-- Búsqueda por ID, cédula o nombre -->
   <div class="card mb-4">
     <div class="card-header bg-dark text-white">
       <h2 class="h5 mb-0">Buscar Cliente</h2>
     </div>
     <div class="card-body">
       <div class="row g-3">
-        <div class="col-md-6">
+        <div class="col-md-4">
+          <label for="busquedaId" class="form-label">Buscar por ID</label>
+          <input [(ngModel)]="id" type="number" class="form-control" id="busquedaId" name="busquedaId">
+          <button class="btn btn-primary mt-2" (click)="buscarClientePorId()">Buscar</button>
+        </div>
+        <div class="col-md-4">
           <label for="busquedaCedula" class="form-label">Buscar por Cédula</label>
           <input [(ngModel)]="cedula" type="text" class="form-control" id="busquedaCedula" name="busquedaCedula">
           <button class="btn btn-success mt-2" (click)="buscarClientePorCedula()">Buscar</button>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label for="busquedaNombre" class="form-label">Buscar por Nombre</label>
           <input [(ngModel)]="nombreCompleto" type="text" class="form-control" id="busquedaNombre" name="busquedaNombre">
           <button class="btn btn-info mt-2" (click)="buscarClientePorNombre()">Buscar</button>

@@ -39,15 +39,20 @@ public class ClienteController {
     }
 
     // Eliminar cliente
-    
-    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarCliente(@PathVariable Long id) {
+        clienteService.deleteCliente(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    // Actualizar cliente
     @PutMapping("/{id}")
     public ResponseEntity<ClientesDTO> actualizarCliente(@PathVariable Long id, @RequestBody ClientesDTO clienteDTO) {
         ClientesDTO actualizado = clienteService.updateCliente(id, clienteDTO);
         return actualizado != null ? ResponseEntity.ok(actualizado) : ResponseEntity.notFound().build();
     }
-    
-    
+
+    // Buscar cliente por cédula
     @GetMapping("/cedula/{cedula}")
     public ResponseEntity<ClientesDTO> buscarPorCedula(@PathVariable String cedula) {
         try {
@@ -57,19 +62,15 @@ public class ClienteController {
             return ResponseEntity.status(404).body(null); // Return 404 if not found
         }
     }
-    
-    
+
+    // Buscar clientes por nombre
     @GetMapping("/buscar")
     public ResponseEntity<List<ClientesDTO>> buscarPorNombre(@RequestParam String nombre) {
         List<ClientesDTO> clientes = clienteService.buscarPorNombre(nombre);
         return clientes.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(clientes);
     }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarCliente(@PathVariable Long id) {
-        clienteService.deleteCliente(id);
-        return ResponseEntity.noContent().build();
-    }
 
+    // Buscar cliente por ID
     @GetMapping("/buscarPorId/{id}")
     public ResponseEntity<ClientesDTO> buscarPorId(@PathVariable Long id) {
         ClientesDTO cliente = clienteService.getClienteById(id);

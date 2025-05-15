@@ -70,6 +70,27 @@ export class ClienteComponent implements OnInit {
       }
     );
   }
+
+buscarClientePorId() {
+  if (!this.id) {
+    console.log('ID no proporcionado.');
+    this.clientesFiltrados = [];
+    return;
+  }
+  this.ClienteService.buscarClientePorId(this.id).subscribe(
+    data => {
+      this.clienteBuscado = data; // Store the found client
+      this.clientesFiltrados = [data]; // Display the result in the modal
+      const modal = new bootstrap.Modal(document.getElementById('searchResultsModal')!);
+      modal.show();
+    },
+    error => {
+      console.log('No se encontró un cliente con el ID proporcionado.');
+      this.clientesFiltrados = [];
+    }
+  );
+}
+
 buscarClientePorCedula() {
   if (!this.cedula) {
     this.clientesFiltrados = [];
@@ -98,33 +119,12 @@ buscarClientePorNombre() {
     data => {
       this.clientesFiltrados = data;
       if (this.clientesFiltrados.length > 0) {
-        
         const modal = new bootstrap.Modal(document.getElementById('searchResultsModal')!); // Use imported Bootstrap
         modal.show();
       }
     },
     error => {
       console.log('No se encontraron clientes con el nombre proporcionado.');
-      this.clientesFiltrados = [];
-    }
-  );
-}
-
-buscarClientePorId() {
-  if (!this.id) {
-    console.log('ID no proporcionado.');
-    this.clientesFiltrados = [];
-    return;
-  }
-  this.ClienteService.buscarClientePorId(this.id).subscribe(
-    data => {
-      this.clienteBuscado = data; // Store the found client
-      this.clientesFiltrados = [data]; // Display the result in the modal
-      const modal = new bootstrap.Modal(document.getElementById('searchResultsModal')!);
-      modal.show();
-    },
-    error => {
-      console.log('No se encontró un cliente con el ID proporcionado.');
       this.clientesFiltrados = [];
     }
   );
