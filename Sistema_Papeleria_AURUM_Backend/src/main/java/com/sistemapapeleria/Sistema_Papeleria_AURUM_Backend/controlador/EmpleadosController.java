@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.RegistroAsistencia;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.EmpleadosDTO;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.EmpleadosService;
 
@@ -48,5 +49,16 @@ public class EmpleadosController {
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         empleadosService.deleteEmpleado(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/asistencia")
+    public ResponseEntity<String> registrarAsistencia(@PathVariable Long id) {
+        empleadosService.registrarAsistencia(id);
+        return ResponseEntity.ok("Asistencia registrada");
+    }
+
+    @GetMapping("/{id}/asistencias")
+    public ResponseEntity<List<RegistroAsistencia>> listarAsistencias(@PathVariable Long id) {
+        return ResponseEntity.ok(empleadosService.getAsistencias(id));
     }
 }
