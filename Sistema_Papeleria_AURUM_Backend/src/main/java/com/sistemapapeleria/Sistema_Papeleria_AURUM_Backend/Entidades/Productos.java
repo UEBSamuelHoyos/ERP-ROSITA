@@ -7,6 +7,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 @Table(name = "productos")
@@ -25,17 +27,22 @@ public class Productos {
     @OneToOne(mappedBy = "producto", cascade = CascadeType.ALL)
     private Inventario inventario; // Relación inversa con Inventario
 
+    @ManyToOne
+    @JoinColumn(name = "proveedor_id", nullable = false)
+    private Proveedores proveedor;
+
     // Constructor vacío
     public Productos() {}
 
     // Constructor con parámetros
-    public Productos(Long id, String nombre, String categoria, double precioCompra, double precioVenta, int stock) {
+    public Productos(Long id, String nombre, String categoria, double precioCompra, double precioVenta, int stock, Proveedores proveedor) {
         this.id = id;
         this.nombre = nombre;
         this.categoria = categoria;
         this.precioCompra = precioCompra;
         this.precioVenta = precioVenta;
         this.stock = stock;
+        this.proveedor = proveedor;
     }
 
     // Getters y setters
@@ -93,6 +100,14 @@ public class Productos {
 
     public void setInventario(Inventario inventario) {
         this.inventario = inventario;
+    }
+
+    public Proveedores getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedores proveedor) {
+        this.proveedor = proveedor;
     }
 
     public void reducirStock(int cantidad) {

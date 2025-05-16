@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Proveedores } from 'src/app/clases/proveedores';
-import { ProveedoresService } from 'src/app/service/proveedores.service';
+import { ProveedoresService, ProductoCompraDTO, CompraProveedorRequest } from 'src/app/service/proveedores.service';
 
 @Component({
   selector: 'app-proveedores',
@@ -10,21 +10,32 @@ import { ProveedoresService } from 'src/app/service/proveedores.service';
 export class ProveedoresComponent implements OnInit {
 
   id: number = 1;
-  cedula: string = '';
-  nombreCompleto: string = '';
+  nombre: string = '';
+  contacto: string = '';
   direccion: string = '';
   telefono: string = '';
 
   proveedores: Proveedores[] = [];
 
-  constructor(private ProveedoresService: ProveedoresService) {}
+  // Para la compra dinámica
+  selectedProveedorId: number | null = null;
+  productoId: number | null = null;
+  productoNombre: string = '';
+  cantidad: number = 1;
+  precioUnitario: number = 0;
+  montoTotal: number = 0;
+  productosDisponibles: { id: number, nombre: string }[] = [];
+
+  constructor(private proveedoresService: ProveedoresService) {}
 
   ngOnInit(): void {
     this.listProveedores();
+    // Si tienes un servicio de productos, aquí puedes cargar productosDisponibles
+    // this.productosService.getProductos().subscribe(data => this.productosDisponibles = data);
   }
 
   listProveedores() {
-    this.ProveedoresService.getProveedoresList().subscribe(
+    this.proveedoresService.getProveedoresList().subscribe(
       data => {
         this.proveedores = data;
         console.log(this.proveedores);
@@ -33,17 +44,52 @@ export class ProveedoresComponent implements OnInit {
   }
 
   addProveedor() {
-    let proveedor = new Proveedores(this.id, this.cedula, this.nombreCompleto, this.direccion, this.telefono);
-    console.log(proveedor);
-    this.ProveedoresService.createProveedor(proveedor).subscribe(
-      res => console.log(res)
+    let proveedor = new Proveedores(this.id, this.nombre, this.contacto, this.direccion, this.telefono);
+    this.proveedoresService.createProveedor(proveedor).subscribe(
+      res => {
+        this.listProveedores();
+      }
     );
   }
 
   deleteProveedor(id: number) {
-    console.log(id);
-    this.ProveedoresService.deleteProveedor(id).subscribe(
+    this.proveedoresService.deleteProveedor(id).subscribe(
       () => this.listProveedores()
+    );
+  }
+
+  seleccionarProveedor(proveedorId: number) {
+    this.selectedProveedorId = proveedorId;
+    // Si quieres filtrar productos por proveedor, hazlo aquí
+    // this.productosDisponibles = ...;
+  }
+
+  comprarProductos() {
+    if (!this.selectedProveedorId || this.cantidad <= 0 || this.precioUnitario <= 0 || (!this.productoId && !this.productoNombre)) {
+      alert('Selecciona proveedor, producto (o nombre nuevo), cantidad y precio unitario válidos');
+      return;
+    }
+    const compra: CompraProveedorRequest = {
+      productos: [
+        {
+          productoId: this.productoId ? this.productoId : undefined,
+          nombre: !this.productoId ? this.productoNombre : undefined,
+          cantidad: this.cantidad,
+          precioUnitario: this.precioUnitario,
+          proveedorId: this.selectedProveedorId
+        }
+      ],
+      montoTotal: this.cantidad * this.precioUnitario
+    };
+    this.proveedoresService.comprarProductos(this.selectedProveedorId, compra).subscribe(
+      res => {
+        alert('Compra realizada y stock actualizado');
+        this.productoId = null;
+        this.productoNombre = '';
+        this.cantidad = 1;
+        this.precioUnitario = 0;
+        this.montoTotal = 0;
+      }
     );
   }
 }

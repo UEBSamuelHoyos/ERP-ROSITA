@@ -31,7 +31,17 @@ public class InventarioServiceImpl implements InventarioService {
         inventario.setCategoria(dto.getCategoria());
         inventario.setFechaIngreso(dto.getFechaIngreso());
         inventario.setNombreProducto(dto.getNombreProducto());
-        inventario.setProducto(new Productos(dto.getIdProducto(), "", "", 0, 0, 0)); // Relación con producto
+        // Busca el producto real por ID
+        Productos producto = productosRepository.findById(dto.getIdProducto()).orElse(null);
+        if (producto == null) {
+            producto = new Productos();
+            producto.setId(dto.getIdProducto());
+            producto.setNombre(dto.getNombreProducto());
+            producto.setStock(dto.getCantidadProducto());
+            // Asigna otros campos obligatorios si es necesario
+            productosRepository.save(producto);
+        }
+        inventario.setProducto(producto);
         inventario.setCantidadProducto(dto.getCantidadProducto());
 
         Inventario saved = inventarioRepository.save(inventario);

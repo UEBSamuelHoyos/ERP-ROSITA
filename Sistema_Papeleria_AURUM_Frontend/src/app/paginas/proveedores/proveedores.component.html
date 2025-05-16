@@ -1,71 +1,84 @@
 <div class="container mt-4">
-  <h1 class="mb-4">Gestión de Proveedores</h1>
-  <!-- Formulario de registro --> 
-  <div class="card mb-4">
-    <div class="card-header bg-primary text-white">
-      <h2 class="h5 mb-0">Registrar Proveedor</h2>
+  <h2>Proveedores</h2>
+
+  <!-- Formulario para agregar proveedor -->
+  <form (ngSubmit)="addProveedor()" class="mb-4">
+    <div class="row">
+      <div class="col">
+        <input type="text" [(ngModel)]="nombre" name="nombre" class="form-control" placeholder="Nombre" required>
+      </div>
+      <div class="col">
+        <input type="text" [(ngModel)]="contacto" name="contacto" class="form-control" placeholder="Contacto" required>
+      </div>
+      <div class="col">
+        <input type="text" [(ngModel)]="direccion" name="direccion" class="form-control" placeholder="Dirección" required>
+      </div>
+      <div class="col">
+        <input type="text" [(ngModel)]="telefono" name="telefono" class="form-control" placeholder="Teléfono" required>
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Agregar Proveedor</button>
+      </div>
     </div>
-    <div class="card-body">
-      <form>
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="id" class="form-label">ID</label>
-            <input [(ngModel)]="id" type="number" class="form-control" id="id" name="id">
-          </div>
-          <div class="col-md-6">
-            <label for="cedula" class="form-label">Cédula</label>
-            <input [(ngModel)]="cedula" type="text" class="form-control" id="cedula" name="cedula">
-          </div>
-        </div>
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="nombreCompleto" class="form-label">Nombre completo</label>
-            <input [(ngModel)]="nombreCompleto" type="text" class="form-control" id="nombreCompleto" name="nombreCompleto">
-          </div>
-          <div class="col-md-6">
-            <label for="direccion" class="form-label">Dirección</label>
-            <input [(ngModel)]="direccion" type="text" class="form-control" id="direccion" name="direccion">
-          </div>
-        </div>
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="telefono" class="form-label">Teléfono</label>
-            <input [(ngModel)]="telefono" type="text" class="form-control" id="telefono" name="telefono">
-          </div>
-        </div>
-        <button type="button" class="btn btn-primary" (click)="addProveedor()">Crear</button>
-      </form>
-    </div>
-  </div>
-  
+  </form>
+
   <!-- Tabla de proveedores -->
-  <div class="card">
-    <div class="card-header bg-light">
-      <h2 class="h5 mb-0">Lista de Proveedores</h2>
-    </div>
-    <div class="card-body p-0">
-      <table class="table table-striped table-hover mb-0">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Cédula</th>
-            <th>Nombre</th>
-            <th>Dirección</th>
-            <th>Teléfono</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let p of proveedores">
-            <td>{{ p.id }}</td>
-            <td>{{ p.cedula }}</td>
-            <td>{{ p.nombreCompleto }}</td>
-            <td>{{ p.direccion }}</td>
-            <td>{{ p.telefono }}</td>
-            <td><button class="btn btn-sm btn-danger" (click)="deleteProveedor(p.id)">Eliminar</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Contacto</th>
+        <th>Dirección</th>
+        <th>Teléfono</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let proveedor of proveedores">
+        <td>{{ proveedor.id }}</td>
+        <td>{{ proveedor.nombre }}</td>
+        <td>{{ proveedor.contacto }}</td>
+        <td>{{ proveedor.direccion }}</td>
+        <td>{{ proveedor.telefono }}</td>
+        <td>
+          <button class="btn btn-danger btn-sm" (click)="deleteProveedor(proveedor.id)">Eliminar</button>
+          <button class="btn btn-success btn-sm ms-2" (click)="seleccionarProveedor(proveedor.id)">Comprar Productos</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Formulario para seleccionar producto, cantidad y precio para la compra -->
+  <div *ngIf="selectedProveedorId" class="mt-4">
+    <h5>Registrar compra para proveedor ID: {{ selectedProveedorId }}</h5>
+    <form (ngSubmit)="comprarProductos()">
+      <div class="row">
+        <div class="col">
+          <select [(ngModel)]="productoId" name="productoId" class="form-control">
+            <option [ngValue]="null">Nuevo producto</option>
+            <option *ngFor="let prod of productosDisponibles" [ngValue]="prod.id">{{ prod.nombre }}</option>
+          </select>
+        </div>
+        <div class="col" *ngIf="!productoId">
+          <input type="text" [(ngModel)]="productoNombre" name="productoNombre" class="form-control" placeholder="Nombre producto nuevo" required>
+        </div>
+        <div class="col">
+          <!-- Campo para seleccionar la cantidad a comprar -->
+          <input type="number" [(ngModel)]="cantidad" name="cantidad" class="form-control" placeholder="Cantidad a comprar" min="1" required>
+        </div>
+        <div class="col">
+          <input type="number" [(ngModel)]="precioUnitario" name="precioUnitario" class="form-control" placeholder="Precio Unitario" min="0.01" step="0.01" required>
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary">Registrar Compra</button>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col">
+          <span *ngIf="cantidad && precioUnitario">Total: {{ cantidad * precioUnitario | number:'1.2-2' }}</span>
+        </div>
+      </div>
+    </form>
   </div>
 </div>

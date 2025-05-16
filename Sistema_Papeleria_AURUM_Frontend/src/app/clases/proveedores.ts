@@ -1,10 +1,10 @@
 export class Proveedores {
     constructor(
         public id: number,
-        public cedula: String,
-        public nombreCompleto: String,
-        public direccion: String,
-        public telefono: String
+        public nombre: string,
+        public contacto: string,
+        public direccion: string,
+        public telefono: string
     ) {}
 }
 
