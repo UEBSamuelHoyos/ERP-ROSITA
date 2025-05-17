@@ -12,6 +12,7 @@ import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Productos;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Inventario;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.VentaProducto;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Facturas;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Impuestos;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.VentasDTO;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.VentaProductoDTO;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.VentasService;
@@ -21,6 +22,7 @@ import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.Producto
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.InventarioRepository;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.VentaProductoRepository;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.FacturasRepository;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.ImpuestosRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +38,7 @@ public class VentasServiceImpl implements VentasService {
     private final InventarioRepository inventarioRepository;
     private final VentaProductoRepository ventaProductoRepository;
     private final FacturasRepository facturasRepository;
+    private final ImpuestosRepository impuestosRepository;
 
     @Autowired
     public VentasServiceImpl(
@@ -44,7 +47,8 @@ public class VentasServiceImpl implements VentasService {
         ProductosRepository productosRepository,
         InventarioRepository inventarioRepository,
         VentaProductoRepository ventaProductoRepository,
-        FacturasRepository facturasRepository
+        FacturasRepository facturasRepository,
+        ImpuestosRepository impuestosRepository
     ) {
         this.ventasRepository = ventasRepository;
         this.clienteRepository = clienteRepository;
@@ -52,6 +56,7 @@ public class VentasServiceImpl implements VentasService {
         this.inventarioRepository = inventarioRepository;
         this.ventaProductoRepository = ventaProductoRepository;
         this.facturasRepository = facturasRepository;
+        this.impuestosRepository = impuestosRepository;
     }
 
     @Override
@@ -66,6 +71,7 @@ public class VentasServiceImpl implements VentasService {
 
             final double[] total = {0.0};
             final double[] descuento = {0.0};
+            final double[] subtotal = {0.0};
 
             List<VentaProducto> ventaProductos = dto.getProductos().stream().map(vpDTO -> {
                 Productos producto = productosRepository.findById(vpDTO.getIdProducto())
@@ -84,10 +90,11 @@ public class VentasServiceImpl implements VentasService {
                 vp.setCantidad(vpDTO.getCantidad());
                 vp.setPrecioUnitario(producto.getPrecioVenta());
 
-                double subtotal = producto.getPrecioVenta() * vpDTO.getCantidad();
-                double desc = cliente.isAfiliado() ? subtotal * 0.1 : 0.0;
+                double sub = producto.getPrecioVenta() * vpDTO.getCantidad();
+                double desc = cliente.isAfiliado() ? sub * 0.1 : 0.0;
                 descuento[0] += desc;
-                total[0] += (subtotal - desc);
+                subtotal[0] += sub;
+                total[0] += (sub - desc);
 
                 producto.reducirStock(vpDTO.getCantidad());
                 productosRepository.save(producto);
@@ -98,9 +105,12 @@ public class VentasServiceImpl implements VentasService {
                 return vp;
             }).collect(Collectors.toList());
 
+            // Calcular IVA sobre el subtotal antes de descuento
+            double iva = subtotal[0] * 0.19;
+
             venta.setProductos(ventaProductos);
             venta.setDescuento(descuento[0]);
-            venta.setTotal(total[0]);
+            venta.setTotal(total[0] + iva); // Aplica IVA al total de la venta
 
             Ventas saved = ventasRepository.save(venta);
             ventaProductoRepository.saveAll(ventaProductos);
@@ -127,6 +137,15 @@ public class VentasServiceImpl implements VentasService {
             ventasList.add(saved);
             savedFactura.setVentas(ventasList);
             facturasRepository.save(savedFactura);
+
+            // === Registrar impuesto IVA automáticamente ===
+            Impuestos imp = new Impuestos();
+            imp.setCantidadVentas(1);
+            imp.setPorcentajeImpuesto(0.19);
+            imp.setTotalImpuesto(iva);
+            imp.setAnioFiscal(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR));
+            imp.setNombreImpuesto("IVA");
+            impuestosRepository.save(imp);
 
             return mapToDTO(saved);
         } catch (RuntimeException ex) {

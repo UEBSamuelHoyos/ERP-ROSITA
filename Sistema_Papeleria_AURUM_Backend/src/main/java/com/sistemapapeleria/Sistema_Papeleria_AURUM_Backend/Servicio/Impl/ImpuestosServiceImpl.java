@@ -25,9 +25,10 @@ public class ImpuestosServiceImpl implements ImpuestosService {
     public ImpuestosDTO saveImpuesto(ImpuestosDTO dto) {
         Impuestos impuesto = new Impuestos();
         impuesto.setCantidadVentas(dto.getCantidadVentas());
-        impuesto.setPorcentajeImpuesto(dto.getPorcentajeImpuesto());
+        impuesto.setPorcentajeImpuesto(0.19); // Siempre 0.19 para IVA
         impuesto.setTotalImpuesto(dto.getTotalImpuesto());
         impuesto.setAnioFiscal(dto.getAnioFiscal());
+        impuesto.setNombreImpuesto("IVA"); // Nuevo campo para el nombre del impuesto
 
         Impuestos saved = impuestosRepository.save(impuesto);
         return mapToDTO(saved);
@@ -58,6 +59,7 @@ public class ImpuestosServiceImpl implements ImpuestosService {
         dto.setPorcentajeImpuesto(entity.getPorcentajeImpuesto());
         dto.setTotalImpuesto(entity.getTotalImpuesto());
         dto.setAnioFiscal(entity.getAnioFiscal());
+        dto.setNombreImpuesto(entity.getNombreImpuesto()); // Nuevo campo en el DTO
         return dto;
     }
 }
