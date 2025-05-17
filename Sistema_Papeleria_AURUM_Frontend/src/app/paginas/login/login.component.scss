@@ -1,0 +1,118 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;     /* Center vertically */
+  background: linear-gradient(135deg, #ffffff, #e0f7fa, #80deea, #4dd0e1); /* Full-screen gradient background */
+  overflow: hidden; /* Prevent scrolling */
+}
+
+.waves-container {
+  position: fixed; /* Ensure it covers the entire screen */
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40vh;
+  overflow: hidden;
+  z-index: -100; /* Ensure waves are far behind all other elements */
+  pointer-events: none; /* Prevent interaction with the waves */
+  transform: rotate(180deg);
+}
+
+.wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  background-repeat: repeat-x;
+  background-position: 0 bottom;
+  transform-origin: center bottom;
+}
+
+.wave-1 {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' fill='%2326c6da'/%3E%3C/svg%3E");
+  animation: wave-animation 25s linear infinite;
+  z-index: 3;
+}
+
+.wave-2 {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.5' fill='%2300acc1'/%3E%3C/svg%3E");
+  animation: wave-animation 20s linear infinite;
+  z-index: 2;
+}
+
+.wave-3 {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.75' fill='%230097a7'/%3E%3C/svg%3E");
+  animation: wave-animation 15s linear infinite;
+  z-index: 1;
+}
+
+@keyframes wave-animation {
+  0% {
+    transform: translateX(0) translateZ(0);
+  }
+  50% {
+    transform: translateX(-25%) translateZ(0);
+  }
+  100% {
+    transform: translateX(-50%) translateZ(0);
+  }
+}
+
+#container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  width: 100%;   /* Full viewport width */
+  position: relative; /* Ensure proper positioning */
+}
+
+.login-form {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center; /* Center text inside the form */
+}
+
+.login-form h1 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.login-form button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.login-form button:hover {
+  background-color: #0056b3;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.875rem;
+  text-align: center;
+  margin-top: 1rem;
+}
