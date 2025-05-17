@@ -11,12 +11,14 @@ import org.slf4j.LoggerFactory;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Facturas;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Cliente;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Ventas;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Productos;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.FacturaDTO;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.VentasDTO;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.FacturaService;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.FacturasRepository;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.ClienteRepository;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.VentasRepository;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.ProductosRepository;
 
 @Service
 public class FacturasServiceImpl implements FacturaService {
@@ -26,12 +28,14 @@ public class FacturasServiceImpl implements FacturaService {
     private final FacturasRepository facturasRepository;
     private final ClienteRepository clienteRepository;
     private final VentasRepository ventasRepository;
+    private final ProductosRepository productosRepository;
 
     @Autowired
-    public FacturasServiceImpl(FacturasRepository facturasRepository, ClienteRepository clienteRepository, VentasRepository ventasRepository) {
+    public FacturasServiceImpl(FacturasRepository facturasRepository, ClienteRepository clienteRepository, VentasRepository ventasRepository, ProductosRepository productosRepository) {
         this.facturasRepository = facturasRepository;
         this.clienteRepository = clienteRepository;
         this.ventasRepository = ventasRepository;
+        this.productosRepository = productosRepository;
     }
 
     @Override
@@ -70,6 +74,26 @@ public class FacturasServiceImpl implements FacturaService {
     @Override
     public void deleteFactura(Long id) {
         facturasRepository.deleteById(id);
+    }
+
+    /**
+     * Procesa la devolución de una venta y actualiza el stock de los productos.
+     */
+    public void procesarDevolucion(Long ventaId) {
+        Ventas venta = ventasRepository.findById(ventaId).orElse(null);
+        if (venta == null) {
+            logger.warn("No se encontró la venta con id {}", ventaId);
+            return;
+        }
+        // Suponiendo que la entidad Ventas tiene una lista de productos y cantidades
+        venta.getProductos().forEach(ventaProducto -> {
+            Productos producto = ventaProducto.getProducto();
+            int cantidadDevuelta = ventaProducto.getCantidad();
+            producto.setStock(producto.getStock() + cantidadDevuelta);
+            productosRepository.save(producto);
+        });
+        // Aquí puedes marcar la venta como devuelta si lo necesitas
+        logger.info("Stock actualizado por devolución de venta {}", ventaId);
     }
 
     private FacturaDTO mapToDTO(Facturas entity, Cliente cliente, List<Ventas> ventas) {

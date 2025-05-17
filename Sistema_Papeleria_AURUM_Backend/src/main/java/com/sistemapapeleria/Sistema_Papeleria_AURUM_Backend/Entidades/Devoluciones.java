@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,8 +16,14 @@ public class Devoluciones {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long facturaId;
-    private Long productoId;
+    @ManyToOne
+    @JoinColumn(name = "factura_id")
+    private Facturas factura;
+
+    @ManyToOne
+    @JoinColumn(name = "producto_id")
+    private Productos producto;
+
     private Integer cantidad;
     private String motivo;
 
@@ -27,20 +35,20 @@ public class Devoluciones {
         this.id = id;
     }
 
-    public Long getFacturaId() {
-        return facturaId;
+    public Facturas getFactura() {
+        return factura;
     }
 
-    public void setFacturaId(Long facturaId) {
-        this.facturaId = facturaId;
+    public void setFactura(Facturas factura) {
+        this.factura = factura;
     }
 
-    public Long getProductoId() {
-        return productoId;
+    public Productos getProducto() {
+        return producto;
     }
 
-    public void setProductoId(Long productoId) {
-        this.productoId = productoId;
+    public void setProducto(Productos producto) {
+        this.producto = producto;
     }
 
     public Integer getCantidad() {
@@ -59,5 +67,4 @@ public class Devoluciones {
         this.motivo = motivo;
     }
 
-   
 }
