@@ -9,6 +9,7 @@ export interface Venta {
   clienteId: number;
   clienteNombre?: string;
   descuento?: number;
+  descuentoAplicado?: boolean;
   total?: number;
   fecha?: string;
   productos: ProductoVenta[];

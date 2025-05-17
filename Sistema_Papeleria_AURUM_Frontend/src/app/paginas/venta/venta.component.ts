@@ -17,6 +17,7 @@ interface Venta {
   total?: number;
   fecha?: string;
   productos: ProductoVenta[];
+  descuentoAplicado?: boolean; // <-- Nuevo campo
 }
 
 interface ProductoLista {

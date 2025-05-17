@@ -17,7 +17,7 @@ export class VentaService {
   }
 
   createVenta(venta: Venta): Observable<Venta> {
-    // El payload ya es correcto desde el componente
+    // Asegúrate de incluir descuentoAplicado en el objeto venta si corresponde
     return this.http.post<Venta>(`${this.baseUrl}`, venta);
   }
 
