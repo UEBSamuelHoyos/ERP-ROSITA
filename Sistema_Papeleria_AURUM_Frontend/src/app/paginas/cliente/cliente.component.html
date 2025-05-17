@@ -7,15 +7,21 @@
       <h2 class="h5 mb-0">Registrar Cliente</h2>
     </div>
     <div class="card-body">
-      <form>
+      <form #clienteForm="ngForm" novalidate>
         <div class="row mb-3">
           <div class="col-md-6">
             <label for="cedula" class="form-label">Cédula</label>
-            <input [(ngModel)]="cedula" type="text" class="form-control" id="cedula" name="cedula">
+            <input [(ngModel)]="cedula" type="text" class="form-control" id="cedula" name="cedula" required pattern="^\d{1,10}$" title="Solo se permiten números (máximo 10 dígitos, sin espacios)" #cedulaInput="ngModel">
+            <div *ngIf="cedulaInput.invalid && cedulaInput.touched" class="text-danger">
+              La cédula debe contener solo números, un máximo de 10 dígitos y no puede incluir espacios.
+            </div>
           </div>
           <div class="col-md-6">
             <label for="nombreCompleto" class="form-label">Nombre completo</label>
-            <input [(ngModel)]="nombreCompleto" type="text" class="form-control" id="nombreCompleto" name="nombreCompleto">
+            <input [(ngModel)]="nombreCompleto" type="text" class="form-control" id="nombreCompleto" name="nombreCompleto" required pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" title="Solo se permiten letras, espacios y tildes" #nombreInput="ngModel">
+            <div *ngIf="nombreInput.invalid && nombreInput.touched" class="text-danger">
+              El nombre solo puede contener letras, espacios y tildes.
+            </div>
           </div>
         </div>
         <div class="row mb-3">
@@ -25,11 +31,14 @@
           </div>
           <div class="col-md-6">
             <label for="telefono" class="form-label">Teléfono</label>
-            <input [(ngModel)]="telefono" type="text" class="form-control" id="telefono" name="telefono">
+            <input [(ngModel)]="telefono" type="text" class="form-control" id="telefono" name="telefono" required pattern="^\+?\d+$" title="Solo se permiten números y el símbolo '+' al inicio (sin espacios)" #telefonoInput="ngModel">
+            <div *ngIf="telefonoInput.invalid && telefonoInput.touched" class="text-danger">
+              El teléfono debe contener solo números y puede incluir el símbolo '+' al inicio, sin espacios.
+            </div>
           </div>
         </div>
-        <button type="button" class="btn btn-primary" (click)="addCliente()">Crear</button>
-        <button type="button" class="btn btn-secondary ms-2" (click)="updateCliente(id)">Actualizar</button>
+        <button type="button" class="btn btn-primary" (click)="addCliente()" [disabled]="clienteForm.invalid">Crear</button>
+        <button type="button" class="btn btn-secondary ms-2" (click)="updateCliente(id)" [disabled]="clienteForm.invalid">Actualizar</button>
       </form>
     </div>
   </div>

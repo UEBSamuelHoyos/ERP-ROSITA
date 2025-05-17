@@ -2,22 +2,31 @@
   <h2>Proveedores</h2>
 
   <!-- Formulario para agregar proveedor -->
-  <form (ngSubmit)="addProveedor()" class="mb-4">
+  <form (ngSubmit)="addProveedor()" class="mb-4" #proveedorForm="ngForm" novalidate>
     <div class="row">
       <div class="col">
-        <input type="text" [(ngModel)]="nombre" name="nombre" class="form-control" placeholder="Nombre" required>
+        <input type="text" [(ngModel)]="nombre" name="nombre" class="form-control" placeholder="Nombre de Empresa" required pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" title="Solo se permiten letras, espacios y tildes" #nombreInput="ngModel">
+        <div *ngIf="nombreInput.invalid && nombreInput.touched" class="text-danger">
+          El nombre solo puede contener letras, espacios y tildes.
+        </div>
       </div>
       <div class="col">
-        <input type="text" [(ngModel)]="contacto" name="contacto" class="form-control" placeholder="Contacto" required>
+        <input type="text" [(ngModel)]="contacto" name="contacto" class="form-control" placeholder="Nombre de Contacto" required pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" title="Solo se permiten letras, espacios y tildes" #contactoInput="ngModel">
+        <div *ngIf="contactoInput.invalid && contactoInput.touched" class="text-danger">
+          El contacto solo puede contener letras, espacios y tildes.
+        </div>
       </div>
       <div class="col">
         <input type="text" [(ngModel)]="direccion" name="direccion" class="form-control" placeholder="Dirección" required>
       </div>
       <div class="col">
-        <input type="text" [(ngModel)]="telefono" name="telefono" class="form-control" placeholder="Teléfono" required>
+        <input type="text" [(ngModel)]="telefono" name="telefono" class="form-control" placeholder="Teléfono" required pattern="^\+?\d+$" title="Solo se permiten números y el símbolo '+' al inicio (sin espacios)" #telefonoInput="ngModel">
+        <div *ngIf="telefonoInput.invalid && telefonoInput.touched" class="text-danger">
+          El teléfono debe contener solo números y puede incluir el símbolo '+' al inicio, sin espacios.
+        </div>
       </div>
       <div class="col-auto">
-        <button type="submit" class="btn btn-primary">Agregar Proveedor</button>
+        <button type="submit" class="btn btn-primary" [disabled]="proveedorForm.invalid">Agregar Proveedor</button>
       </div>
     </div>
   </form>
@@ -27,8 +36,8 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Nombre</th>
-        <th>Contacto</th>
+        <th>Nombre de Empresa</th>
+        <th>Nombre de Contacto</th>
         <th>Dirección</th>
         <th>Teléfono</th>
         <th>Acciones</th>

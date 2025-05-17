@@ -2,22 +2,34 @@
   <h2>Empleados</h2>
 
   <!-- Formulario para agregar empleado -->
-  <form (ngSubmit)="agregarEmpleado()" class="mb-4">
+  <form (ngSubmit)="agregarEmpleado()" class="mb-4" #empleadoForm="ngForm" novalidate>
     <div class="row">
       <div class="col">
-        <input type="text" [(ngModel)]="cedula" name="cedula" class="form-control" placeholder="Cédula" required>
+        <input type="text" [(ngModel)]="cedula" name="cedula" class="form-control" placeholder="Cédula" required pattern="^\d{1,10}$" title="Solo se permiten números (máximo 10 dígitos, sin espacios)" #cedulaInput="ngModel">
+        <div *ngIf="cedulaInput.invalid && cedulaInput.touched" class="text-danger">
+          La cédula debe contener solo números, un máximo de 10 dígitos y no puede incluir espacios.
+        </div>
       </div>
       <div class="col">
-        <input type="text" [(ngModel)]="nombreCompleto" name="nombreCompleto" class="form-control" placeholder="Nombre Completo" required>
+        <input type="text" [(ngModel)]="nombreCompleto" name="nombreCompleto" class="form-control" placeholder="Nombre Completo" required pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" title="Solo se permiten letras, espacios y tildes" #nombreInput="ngModel">
+        <div *ngIf="nombreInput.invalid && nombreInput.touched" class="text-danger">
+          El nombre solo puede contener letras, espacios y tildes.
+        </div>
       </div>
       <div class="col">
-        <input type="text" [(ngModel)]="cargo" name="cargo" class="form-control" placeholder="Cargo" required>
+        <input type="text" [(ngModel)]="cargo" name="cargo" class="form-control" placeholder="Cargo" required pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" title="Solo se permiten letras y tildes" #cargoInput="ngModel">
+        <div *ngIf="cargoInput.invalid && cargoInput.touched" class="text-danger">
+          El cargo solo puede contener letras y tildes.
+        </div>
       </div>
       <div class="col">
-        <input type="text" [(ngModel)]="telefono" name="telefono" class="form-control" placeholder="Teléfono" required>
+        <input type="text" [(ngModel)]="telefono" name="telefono" class="form-control" placeholder="Teléfono" required pattern="^\+?\d+$" title="Solo se permiten números y el símbolo '+' al inicio (sin espacios)" #telefonoInput="ngModel">
+        <div *ngIf="telefonoInput.invalid && telefonoInput.touched" class="text-danger">
+          El teléfono debe contener solo números y puede incluir el símbolo '+' al inicio, sin espacios.
+        </div>
       </div>
       <div class="col-auto">
-        <button type="submit" class="btn btn-primary">Agregar Empleado</button>
+        <button type="submit" class="btn btn-primary" [disabled]="empleadoForm.invalid">Agregar Empleado</button>
       </div>
     </div>
   </form>
