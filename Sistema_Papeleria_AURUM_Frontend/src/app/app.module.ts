@@ -15,7 +15,6 @@ import { InventarioComponent } from './paginas/inventario/inventario.component';
 import { HomeComponent } from './paginas/home/home.component';
 import { VentaComponent } from './paginas/venta/venta.component';
 import { FacturasComponent } from './paginas/facturas/facturas.component';
-import {LoginComponent} from './paginas/login/login.component';
 
 
 @NgModule({
@@ -32,7 +31,6 @@ import {LoginComponent} from './paginas/login/login.component';
     VentaComponent,
     HomeComponent,
     FacturasComponent,
-    LoginComponent,
   
   ],
   imports: [
