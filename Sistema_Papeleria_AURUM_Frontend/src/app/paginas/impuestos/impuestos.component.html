@@ -1,1 +1,25 @@
-<p>impuestos works!</p>
+<div class="container mt-4">
+  <h2>Lista de Impuestos (IVA)</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Cantidad Ventas</th>
+        <th>Porcentaje Impuesto</th>
+        <th>Total Impuesto</th>
+        <th>Año Fiscal</th>
+        <th>Nombre Impuesto</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let imp of impuestos">
+        <td>{{ imp.id }}</td>
+        <td>{{ imp.cantidadVentas }}</td>
+        <td>{{ imp.porcentajeImpuesto | percent:'1.0-2' }}</td>
+        <td>{{ imp.totalImpuesto | currency:'COP':'symbol':'1.2-2' }}</td>
+        <td>{{ imp.anioFiscal }}</td>
+        <td>{{ imp.nombreImpuesto }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
