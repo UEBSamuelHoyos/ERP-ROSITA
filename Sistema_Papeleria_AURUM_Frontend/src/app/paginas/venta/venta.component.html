@@ -34,6 +34,14 @@
             </table>
           </div>
         </div>
+        <div class="mb-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="ventaCredito" [(ngModel)]="ventaCredito" name="ventaCredito">
+            <label class="form-check-label" for="ventaCredito">
+              Venta a crédito (el cliente paga después)
+            </label>
+          </div>
+        </div>
         <button type="button" class="btn btn-primary" (click)="agregarVenta()">Registrar Venta</button>
       </form>
     </div>
@@ -68,8 +76,12 @@
           </ul>
         </td>
         <td>
-          <span *ngIf="venta.descuentoAplicado; else noDescuento" class="badge bg-success">Sí</span>
-          <ng-template #noDescuento><span class="badge bg-secondary">No</span></ng-template>
+          <ng-container *ngIf="venta.descuentoAplicado; else noDescuento">
+            <span class="badge bg-success">Sí</span>
+          </ng-container>
+          <ng-template #noDescuento>
+            <span class="badge bg-secondary">No</span>
+          </ng-template>
         </td>
       </tr>
     </tbody>

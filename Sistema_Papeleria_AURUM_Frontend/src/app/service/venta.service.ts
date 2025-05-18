@@ -17,7 +17,7 @@ export class VentaService {
   }
 
   createVenta(venta: Venta): Observable<Venta> {
-    // Asegúrate de incluir descuentoAplicado en el objeto venta si corresponde
+    // El backend debe manejar el campo ventaCredito si está presente
     return this.http.post<Venta>(`${this.baseUrl}`, venta);
   }
 

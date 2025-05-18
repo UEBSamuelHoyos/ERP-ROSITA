@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { VentaService } from 'src/app/service/venta.service';
 import { ProductosService } from 'src/app/service/productos.service';
-
+import { Router } from '@angular/router';
 
 interface ProductoVenta {
   idProducto: number;
@@ -37,10 +37,12 @@ export class VentaComponent implements OnInit {
   ventas: Venta[] = [];
   clienteId: number = 0;
   listaProductos: ProductoLista[] = [];
+  ventaCredito: boolean = false; // Nuevo campo para venta a crédito
 
   constructor(
     private ventaService: VentaService,
-    private productosService: ProductosService
+    private productosService: ProductosService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -81,7 +83,7 @@ export class VentaComponent implements OnInit {
       .filter(p => p.seleccionado && typeof p.cantidadSeleccionada === 'number' && p.cantidadSeleccionada > 0)
       .map(p => ({
         idProducto: p.id,
-        cantidad: p.cantidadSeleccionada as number // asegura que cantidad nunca sea undefined
+        cantidad: p.cantidadSeleccionada as number
       }));
 
     if (!this.clienteId || productosSeleccionados.length === 0) {
@@ -89,16 +91,27 @@ export class VentaComponent implements OnInit {
       return;
     }
 
-    const ventaPayload: Venta = {
+    const ventaPayload: any = {
       clienteId: this.clienteId,
       productos: productosSeleccionados
     };
+
+    const esVentaCredito = this.ventaCredito; // Guarda el valor antes de resetear
+
+    if (esVentaCredito) {
+      ventaPayload.ventaCredito = true;
+    }
 
     this.ventaService.createVenta(ventaPayload).subscribe(
       data => {
         this.clienteId = 0;
         this.listaProductos.forEach(p => { p.seleccionado = false; p.cantidadSeleccionada = 1; });
+        this.ventaCredito = false;
         this.listarVentas();
+
+        if (esVentaCredito) {
+          this.router.navigate(['/cuentas']);
+        }
       },
       error => {
         if (error && error.error && typeof error.error === 'string') {

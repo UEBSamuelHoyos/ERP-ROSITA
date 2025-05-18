@@ -70,10 +70,19 @@ public class CuentasCobrarServiceImpl implements CuentasCobrarService {
             .collect(Collectors.toList());
     }
 
+    // 7. Marcar una cuenta como pagada
+    public CuentasCobrarDTO marcarComoPagada(Long id) {
+        return cuentasCobrarRepository.findById(id).map(cuenta -> {
+            cuenta.setEstado("PAGADO");
+            cuentasCobrarRepository.save(cuenta);
+            return mapToDTO(cuenta);
+        }).orElse(null);
+    }
+
     // 🔄 Utilidad: Convertir DTO → Entidad
     private CuentasCobrar mapToEntity(CuentasCobrarDTO dto) {
         CuentasCobrar entity = new CuentasCobrar();
-        entity.setId(dto.getId());
+        // No asignes el id aquí para nuevas cuentas
         entity.setClienteId(dto.getClienteId());
         entity.setMonto(dto.getMonto());
         entity.setEstado(dto.getEstado());

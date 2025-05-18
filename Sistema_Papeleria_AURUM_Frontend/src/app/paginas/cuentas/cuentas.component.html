@@ -1,0 +1,50 @@
+<div class="container mt-4">
+  <h2>Cuentas por Cobrar</h2>
+  <div *ngIf="loading">Cargando cuentas...</div>
+  <table class="table table-bordered" *ngIf="!loading">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Cliente</th>
+        <th>Monto</th>
+        <th>Estado</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cuenta of cuentasCobrar">
+        <td>{{ cuenta.id }}</td>
+        <td>{{ cuenta.clienteId }}</td>
+        <td>{{ cuenta.monto }}</td>
+        <td>{{ cuenta.estado }}</td>
+        <td>
+          <button *ngIf="cuenta.estado !== 'PAGADO'" class="btn btn-success btn-sm" (click)="pagarCuentaCobrar(cuenta.id)">Marcar como pagada</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="mt-5">Cuentas por Pagar</h2>
+  <table class="table table-bordered" *ngIf="!loading">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Proveedor</th>
+        <th>Monto</th>
+        <th>Estado</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cuenta of cuentasPagar">
+        <td>{{ cuenta.id }}</td>
+        <td>{{ cuenta.proveedorId }}</td>
+        <td>{{ cuenta.monto }}</td>
+        <td>{{ cuenta.estado }}</td>
+        <td>
+          <button *ngIf="cuenta.estado !== 'PAGADO'" class="btn btn-success btn-sm" (click)="pagarCuentaPagar(cuenta.id)">Marcar como pagada</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
