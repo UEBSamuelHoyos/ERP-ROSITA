@@ -14,57 +14,18 @@ import { ImpuestosComponent } from './paginas/impuestos/impuestos.component';
 import { InventarioComponent } from './paginas/inventario/inventario.component';
 
 const routes: Routes = [
-  {
-    path: "",
-    component: LoginComponent
-  },
-  {
-    path: "Cliente",
-    component: ClienteComponent
-  },
-
-    {
-    path: "Proveedores",
-    component: ProveedoresComponent
-  },
-    {
-    path: "Cuentas",
-    component: CuentasComponent
-  },
-    {
-    path: "home",
-    component: HomeComponent
-  },
-    {
-    path: "Productos",
-    component: ProductosComponent
-  },
-    {
-    path: "Facturas",
-    component: FacturasComponent
-  },
-    
-    {
-    path: "Devoluciones",
-    component: DevolucionesComponent
-  },
-    {
-    path: "Venta",
-    component: VentaComponent
-  },
-  {
-    path: "Empleados",
-    component: EmpleadosComponent
-  },
-   {
-    path: "Impuestos",
-    component: ImpuestosComponent
-  },
-   {
-    path: "inventario",
-    component: InventarioComponent
-  },
-  
+  { path: '', component: LoginComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'Cliente', component: ClienteComponent },
+  { path: 'Proveedores', component: ProveedoresComponent },
+  { path: 'Cuentas', component: CuentasComponent },
+  { path: 'Productos', component: ProductosComponent },
+  { path: 'Facturas', component: FacturasComponent },
+  { path: 'Devoluciones', component: DevolucionesComponent },
+  { path: 'Venta', component: VentaComponent },
+  { path: 'Empleados', component: EmpleadosComponent },
+  { path: 'Impuestos', component: ImpuestosComponent },
+  { path: 'inventario', component: InventarioComponent }
 ];
 
 @NgModule({

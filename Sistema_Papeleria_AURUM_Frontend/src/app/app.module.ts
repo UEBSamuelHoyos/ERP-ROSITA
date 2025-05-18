@@ -16,6 +16,7 @@ import { HomeComponent } from './paginas/home/home.component';
 import { VentaComponent } from './paginas/venta/venta.component';
 import { FacturasComponent } from './paginas/facturas/facturas.component';
 import { CuentasComponent } from './paginas/cuentas/cuentas.component';
+import { LoginComponent } from './paginas/login/login.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { CuentasComponent } from './paginas/cuentas/cuentas.component';
     HomeComponent,
     FacturasComponent,
     CuentasComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

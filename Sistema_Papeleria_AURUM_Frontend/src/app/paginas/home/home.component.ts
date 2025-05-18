@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -9,6 +10,7 @@ export class HomeComponent {
   seleccionado = Array(11).fill(false);
   colorDesactivado = "#555555";
   colorActivado = "#000000";
+  usuario: string = '';
 
   rutas = [
     "/login",
@@ -26,10 +28,10 @@ export class HomeComponent {
   ];
 
   constructor(private router: Router) {
+    this.usuario = localStorage.getItem('usuario') || '';
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        console.log("Evento", event);
-
         const index = this.rutas.indexOf(event.urlAfterRedirects);
         this.seleccionado = Array(11).fill(false);
         if (index !== -1) {
@@ -41,6 +43,11 @@ export class HomeComponent {
 
   navegar(direccion: string) {
     this.router.navigate([direccion]);
-    console.log(direccion);
   }
+
+  mostrarImpuestos(): boolean {
+    return this.usuario !== 'gladys'; // Gladys no ve el botón
+  }
+
+  
 }
