@@ -7,13 +7,12 @@ public class VentasDTO {
     private Long id;
     private Long clienteId;
     private String clienteNombre;
-    private double descuento;
-    private double total;
+    private Double descuento;
+    private Double total;
     private Date fecha;
     private List<VentaProductoDTO> productos;
     private Boolean ventaCredito;
 
-    // Getters y setters
     public Long getId() {
         return id;
     }
@@ -38,19 +37,19 @@ public class VentasDTO {
         this.clienteNombre = clienteNombre;
     }
 
-    public double getDescuento() {
+    public Double getDescuento() {
         return descuento;
     }
 
-    public void setDescuento(double descuento) {
+    public void setDescuento(Double descuento) {
         this.descuento = descuento;
     }
 
-    public double getTotal() {
+    public Double getTotal() {
         return total;
     }
 
-    public void setTotal(double total) {
+    public void setTotal(Double total) {
         this.total = total;
     }
 

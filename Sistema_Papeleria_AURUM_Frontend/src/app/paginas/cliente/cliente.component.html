@@ -37,6 +37,16 @@
             </div>
           </div>
         </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="afiliado" name="afiliado" [(ngModel)]="afiliado">
+              <label class="form-check-label" for="afiliado">
+                Cliente fidelizado (aplica descuento)
+              </label>
+            </div>
+          </div>
+        </div>
         <button type="button" class="btn btn-primary" (click)="addCliente()" [disabled]="clienteForm.invalid">Crear</button>
         <button type="button" class="btn btn-secondary ms-2" (click)="updateCliente(id)" [disabled]="clienteForm.invalid">Actualizar</button>
       </form>
@@ -121,6 +131,7 @@
             <th>Nombre</th>
             <th>Dirección</th>
             <th>Teléfono</th>
+            <th>Fidelizado</th> <!-- Nueva columna -->
             <th>Acciones</th>
           </tr>
         </thead>
@@ -131,6 +142,10 @@
             <td>{{ c.nombreCompleto }}</td>
             <td>{{ c.direccion }}</td>
             <td>{{ c.telefono }}</td>
+            <td>
+              <span *ngIf="c.afiliado; else noFidelizado" class="badge bg-success">Sí</span>
+              <ng-template #noFidelizado><span class="badge bg-secondary">No</span></ng-template>
+            </td>
             <td>
               <button class="btn btn-sm btn-warning me-2" (click)="cargarDatos(c)">Editar</button>
               <button class="btn btn-sm btn-danger" (click)="deleteCliente(c.id)">Eliminar</button>

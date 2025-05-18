@@ -17,7 +17,7 @@ export class VentaService {
   }
 
   createVenta(venta: Venta): Observable<Venta> {
-    // El payload ya es correcto desde el componente
+    // El backend debe manejar el campo ventaCredito si está presente
     return this.http.post<Venta>(`${this.baseUrl}`, venta);
   }
 

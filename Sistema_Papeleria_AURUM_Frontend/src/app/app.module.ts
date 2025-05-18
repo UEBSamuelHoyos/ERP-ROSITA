@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClienteComponent } from './paginas/cliente/cliente.component';
 import { TabsComponent } from './core/components/tabs/tabs.component';
 import { ImpuestosComponent } from './paginas/impuestos/impuestos.component'; 
@@ -15,7 +15,7 @@ import { InventarioComponent } from './paginas/inventario/inventario.component';
 import { HomeComponent } from './paginas/home/home.component';
 import { VentaComponent } from './paginas/venta/venta.component';
 import { FacturasComponent } from './paginas/facturas/facturas.component';
-
+import { CuentasComponent } from './paginas/cuentas/cuentas.component';
 
 @NgModule({
   declarations: [
@@ -31,13 +31,14 @@ import { FacturasComponent } from './paginas/facturas/facturas.component';
     VentaComponent,
     HomeComponent,
     FacturasComponent,
-  
+    CuentasComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

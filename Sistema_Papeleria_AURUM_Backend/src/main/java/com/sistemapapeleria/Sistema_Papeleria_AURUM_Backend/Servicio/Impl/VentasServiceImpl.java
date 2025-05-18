@@ -15,7 +15,9 @@ import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Facturas;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Impuestos;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.VentasDTO;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.VentaProductoDTO;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.CuentasCobrarDTO;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.VentasService;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.CuentasCobrarService;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.VentasRepository;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.ClienteRepository;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.ProductosRepository;
@@ -39,6 +41,9 @@ public class VentasServiceImpl implements VentasService {
     private final VentaProductoRepository ventaProductoRepository;
     private final FacturasRepository facturasRepository;
     private final ImpuestosRepository impuestosRepository;
+
+    @Autowired
+    private CuentasCobrarService cuentasCobrarService;
 
     @Autowired
     public VentasServiceImpl(
@@ -146,6 +151,15 @@ public class VentasServiceImpl implements VentasService {
             imp.setAnioFiscal(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR));
             imp.setNombreImpuesto("IVA");
             impuestosRepository.save(imp);
+
+            // === Crear cuenta por cobrar si la venta es a crédito ===
+            if (Boolean.TRUE.equals(dto.getVentaCredito())) {
+                CuentasCobrarDTO cuenta = new CuentasCobrarDTO();
+                cuenta.setClienteId(dto.getClienteId());
+                cuenta.setMonto(dto.getTotal());
+                cuenta.setEstado("PENDIENTE");
+                cuentasCobrarService.saveCuentaCobrar(cuenta);
+            }
 
             return mapToDTO(saved);
         } catch (RuntimeException ex) {
