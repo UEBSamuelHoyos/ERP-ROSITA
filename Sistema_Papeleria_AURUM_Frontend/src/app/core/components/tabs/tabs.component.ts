@@ -10,6 +10,7 @@ export class TabsComponent {
   seleccionado = Array(12).fill(false);
   colorDesactivado = "#555555";
   colorActivado = "#000000";
+  usuario: string = '';
 
   rutas = [
     "/Login",
@@ -27,6 +28,7 @@ export class TabsComponent {
   ];
 
   constructor(private router: Router) {
+    this.usuario = localStorage.getItem('usuario') || '';
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         console.log("Evento", event);
@@ -43,5 +45,9 @@ export class TabsComponent {
   navegar(direccion: string) {
     this.router.navigate([direccion]);
     console.log(direccion);
+  }
+
+  mostrarImpuestos(): boolean {
+    return this.usuario !== 'gladys'; // Gladys no ve el botón
   }
 }
