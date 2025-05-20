@@ -69,4 +69,22 @@ public class CuentasPagarController {
         List<CuentasPagarDTO> cuentas = cuentasPagarService.getCuentasByProveedorId(proveedorId);
         return ResponseEntity.ok(cuentas);
     }
+
+    /**
+     * Registrar una compra a crédito a un proveedor (crea una cuenta por pagar).
+     * Ejemplo de body:
+     * {
+     *   "proveedorId": 123,
+     *   "monto": 50000,
+     *   "descripcion": "Compra de insumos",
+     *   "fechaVencimiento": "2024-07-31"
+     * }
+     */
+    @PostMapping("/comprar-credito")
+    public ResponseEntity<CuentasPagarDTO> comprarACredito(@RequestBody CuentasPagarDTO cuentaDTO) {
+        // El servicio debe crear la cuenta por pagar con estado "PENDIENTE"
+        cuentaDTO.setEstado("PENDIENTE");
+        CuentasPagarDTO creada = cuentasPagarService.saveCuentaPagar(cuentaDTO);
+        return ResponseEntity.ok(creada);
+    }
 }
