@@ -1,17 +1,23 @@
 package com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.Impl;
 
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.CompraProveedor;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Proveedores;
-import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.ProveedoresDTO;
-import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.CompraProveedorRequest;
-import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.ProductoCompraDTO;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Productos;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.Inventario;
-import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.ProveedoresService;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Entidades.CuentasPagar;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.CompraProveedorRepository;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.ProveedoresRepository;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.ProductosRepository;
 import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.InventarioRepository;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.repositorio.CuentasPagarRepository;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.CompraProveedorRequest;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.ProductoCompraDTO;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Modelo.ProveedoresDTO;
+import com.sistemapapeleria.Sistema_Papeleria_AURUM_Backend.Servicio.ProveedoresService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,16 +27,23 @@ public class ProveedoresServiceImpl implements ProveedoresService {
     private final ProveedoresRepository proveedoresRepository;
     private final ProductosRepository productosRepository;
     private final InventarioRepository inventarioRepository;
+    private final CompraProveedorRepository compraProveedorRepository;
+    private final CuentasPagarRepository cuentasPagarRepository;
+    private static final Logger logger = LoggerFactory.getLogger(ProveedoresServiceImpl.class);
 
     @Autowired
     public ProveedoresServiceImpl(
         ProveedoresRepository proveedoresRepository,
         ProductosRepository productosRepository,
-        InventarioRepository inventarioRepository
+        InventarioRepository inventarioRepository,
+        CompraProveedorRepository compraProveedorRepository,
+        CuentasPagarRepository cuentasPagarRepository
     ) {
         this.proveedoresRepository = proveedoresRepository;
         this.productosRepository = productosRepository;
         this.inventarioRepository = inventarioRepository;
+        this.compraProveedorRepository = compraProveedorRepository;
+        this.cuentasPagarRepository = cuentasPagarRepository;
     }
 
     @Override
@@ -71,13 +84,13 @@ public class ProveedoresServiceImpl implements ProveedoresService {
         Proveedores proveedor = proveedoresRepository.findById(proveedorId)
             .orElseThrow(() -> new RuntimeException("Proveedor no encontrado con ID: " + proveedorId));
 
+        double montoTotal = 0.0;
+
         for (ProductoCompraDTO pc : request.getProductos()) {
             Productos producto = null;
-            // Buscar producto por ID si se envía, o por nombre y proveedor si es nuevo
             if (pc.getProductoId() != null) {
                 producto = productosRepository.findById(pc.getProductoId()).orElse(null);
             } else if (pc.getNombre() != null && !pc.getNombre().isEmpty()) {
-                // Busca producto existente por nombre y proveedor
                 producto = productosRepository.findAll().stream()
                     .filter(p -> p.getNombre().equalsIgnoreCase(pc.getNombre()) && 
                                  p.getProveedor() != null && 
@@ -86,7 +99,6 @@ public class ProveedoresServiceImpl implements ProveedoresService {
                     .orElse(null);
             }
             if (producto == null) {
-                // Crear producto nuevo para el proveedor
                 if (pc.getNombre() == null || pc.getNombre().isEmpty()) {
                     throw new IllegalArgumentException("El nombre del producto no puede ser vacío.");
                 }
@@ -99,7 +111,7 @@ public class ProveedoresServiceImpl implements ProveedoresService {
                 producto.setStock(pc.getCantidad());
                 producto.setPrecioCompra(pc.getPrecioUnitario());
                 producto.setPrecioVenta(pc.getPrecioUnitario() * 1.2);
-                producto.setCategoria("Papelería"); // O la categoría que corresponda
+                producto.setCategoria("Papelería");
                 producto = productosRepository.save(producto);
 
                 Inventario inventario = new Inventario();
@@ -110,7 +122,6 @@ public class ProveedoresServiceImpl implements ProveedoresService {
                 inventario.setFechaIngreso(new java.util.Date());
                 inventarioRepository.save(inventario);
             } else {
-                // Solo actualiza el stock del producto existente
                 producto.setStock(producto.getStock() + pc.getCantidad());
                 productosRepository.save(producto);
 
@@ -125,6 +136,26 @@ public class ProveedoresServiceImpl implements ProveedoresService {
                 inventario.setCantidadProducto(producto.getStock());
                 inventarioRepository.save(inventario);
             }
+
+            // Registrar la compra en la tabla compras_proveedor
+            CompraProveedor compra = new CompraProveedor();
+            compra.setProveedor(proveedor);
+            compra.setProducto(producto);
+            compra.setCantidad(pc.getCantidad());
+            compra.setPrecioUnitario(pc.getPrecioUnitario());
+            compra.setFechaCompra(new java.util.Date());
+            compraProveedorRepository.save(compra);
+
+            montoTotal += pc.getCantidad() * pc.getPrecioUnitario();
+        }
+
+        // (Opcional) Registrar el egreso como cuenta por pagar
+        if (montoTotal > 0) {
+            CuentasPagar cuenta = new CuentasPagar();
+            cuenta.setProveedorId(proveedorId);
+            cuenta.setMonto(montoTotal);
+            cuenta.setEstado("PENDIENTE");
+            cuentasPagarRepository.save(cuenta);
         }
     }
 

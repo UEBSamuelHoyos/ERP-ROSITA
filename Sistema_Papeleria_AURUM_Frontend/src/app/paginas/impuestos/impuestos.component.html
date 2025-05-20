@@ -1,5 +1,7 @@
 <div class="container mt-4">
   <h2>Lista de Impuestos (IVA)</h2>
+  <button class="btn btn-info mb-3 me-2" (click)="mostrarReporte = true">Ver Reporte de Impuestos</button>
+  <button class="btn btn-success mb-3" (click)="mostrarIngresosEgresos = true">Ver Reporte de Ingresos y Egresos</button>
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -22,4 +24,61 @@
       </tr>
     </tbody>
   </table>
+
+  <!-- Modal de reporte de impuestos -->
+  <div class="modal fade show" tabindex="-1" [ngStyle]="{display: mostrarReporte ? 'block' : 'none', background: mostrarReporte ? 'rgba(0,0,0,0.5)' : ''}" *ngIf="mostrarReporte">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Reporte de Impuestos</h5>
+          <button type="button" class="btn-close" (click)="mostrarReporte = false"></button>
+        </div>
+        <div class="modal-body">
+          <p><b>Total de impuestos recaudados:</b> {{ getTotalImpuestos() | currency:'COP':'symbol':'1.2-2' }}</p>
+          <p><b>Cantidad de registros:</b> {{ impuestos.length }}</p>
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Año Fiscal</th>
+                <th>Total Impuesto</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let imp of impuestos">
+                <td>{{ imp.id }}</td>
+                <td>{{ imp.nombreImpuesto }}</td>
+                <td>{{ imp.anioFiscal }}</td>
+                <td>{{ imp.totalImpuesto | currency:'COP':'symbol':'1.2-2' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="mostrarReporte = false">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de reporte de ingresos y egresos -->
+  <div class="modal fade show" tabindex="-1" [ngStyle]="{display: mostrarIngresosEgresos ? 'block' : 'none', background: mostrarIngresosEgresos ? 'rgba(0,0,0,0.5)' : ''}" *ngIf="mostrarIngresosEgresos">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Reporte de Ingresos y Egresos</h5>
+          <button type="button" class="btn-close" (click)="mostrarIngresosEgresos = false"></button>
+        </div>
+        <div class="modal-body">
+          <p><b>Total Ventas (Ingresos):</b> {{ totalVentas | currency:'COP':'symbol':'1.2-2' }}</p>
+          <p><b>Total Compras a Proveedores (Egresos):</b> {{ totalCompras | currency:'COP':'symbol':'1.2-2' }}</p>
+          <p><b>Ingresos Netos:</b> {{ ingresosNetos | currency:'COP':'symbol':'1.2-2' }}</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="mostrarIngresosEgresos = false">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

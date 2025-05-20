@@ -20,8 +20,6 @@ public class CompraProveedor {
 
     private Integer cantidad;
     private Double precioUnitario;
-
-    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCompra;
 
     public Long getId() { return id; }
