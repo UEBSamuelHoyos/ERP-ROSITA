@@ -33,3 +33,15 @@ public class AuthController {
         }
     }
 }
+/* 
+CREATE TABLE usuarios (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    rol VARCHAR(20) NOT NULL
+);
+
+-- Inserta usuarios
+INSERT INTO usuarios (username, password, rol) VALUES 
+('rosita', '1234', 'admin'),
+('gladys', '1234', 'usuario'); */
